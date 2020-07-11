@@ -1,3 +1,5 @@
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Socket-01.png' width='500' alt='Automerge logo' />
+
 # BIMSocket
 
 *Keeping you conected*
