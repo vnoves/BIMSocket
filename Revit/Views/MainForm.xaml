@@ -1,0 +1,59 @@
+﻿<Window x:Class="BIMSocket.MainForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="MainWindow"
+        Height="395.355" Width="240" 
+        MinHeight="280" MinWidth="240" 
+        MaxHeight="400" MaxWidth="240" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" Title="{Binding Path=ProjectName}"
+        Style="{DynamicResource CustomWindowStyle}" 
+        WindowStyle="None" >
+
+    <Border Style="{DynamicResource MainBorderTemplate}" 
+            Margin="15,10,10,13" 
+            MouseDown="Border_MouseDown">
+
+        <Grid Margin="9" 
+              Background="Transparent">
+
+            <!--Title Bar elements-->
+            <Button Style="{DynamicResource TitleButtonStyle}" 
+                    Name="TtitleButton" 
+                    Margin="11,7,0,319" 
+                    HorizontalAlignment="Left"
+                    >BIMSocket</Button>
+            <Button Style="{DynamicResource CloseButtonStyle}" 
+                    Name="CloseButton" 
+                    Margin="164,12,0,318" 
+                    HorizontalAlignment="Left"
+                    >X</Button>
+            <Label Style="{DynamicResource VersionLabel}" 
+                    Margin="15,30,0,308" 
+                    HorizontalAlignment="Left"/>
+
+            <!--Main Form elements-->
+            <Button Name="Mainbutton" 
+                    Style="{DynamicResource MainButtonStyle}"  
+                    Margin="8,312,0,10"
+                    HorizontalAlignment="Left" Content="Apply"  Click="Mainbutton_Click"/>
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,83,0,0" VerticalAlignment="Top" Width="180" x:Name="ChangesList" ItemsSource="{Binding changedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="99" Margin="8,199,0,0" VerticalAlignment="Top" Width="180" x:Name="ReceivingList" ItemsSource="{Binding changedElements}" />
+            <Label Style="{DynamicResource VersionLabel}" 
+                Margin="42,64,0,274" 
+                HorizontalAlignment="Left" Content="SEND" HorizontalContentAlignment="Left" Width="112"/>
+            <Label Style="{DynamicResource VersionLabel}" 
+                Margin="42,180,0,158" 
+                HorizontalAlignment="Left" Content="RECEIVE" HorizontalContentAlignment="Left" Width="112"/>
+        </Grid>
+    </Border>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+</Window>
