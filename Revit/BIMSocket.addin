@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Application BIMSocket</Name>
+    <Assembly>BIMSocket.dll</Assembly>
+    <FullClassName>BIMSocket.App</FullClassName>
+    <ClientId>3256F49C-7F76-4734-8992-3F1CF596BE9B</ClientId>
+    <VendorId>VLN</VendorId>
+    <VendorDescription>Valentin Noves, http://valentinnoves.com/</VendorDescription>
+  </AddIn>
+</RevitAddIns>
