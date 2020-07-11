@@ -10,11 +10,11 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
 
 
-## Authors
-* **Valentin Noves** - *ENGworks* 
-* **Pablo Derendinger** - *Engowrks* 
-* **Alexander Corral** - *ENGworks*
-* **Jason Ekensten** - *Resorts World Las Vegas*
+## How it works ##
+
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='300' alt='Conections logo' />
+
+BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in the industry in real time. For the hackathon we will connect Revit, a Three JS viewer and Unity (maybe be Rhino as well) to our socket and show how it works.
 
 ## Contribute ##
 
@@ -31,6 +31,11 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 ## References
 https://github.com/va3c/RvtVa3c
 
+## Authors
+* **Valentin Noves** - *ENGworks* 
+* **Pablo Derendinger** - *Engowrks* 
+* **Alexander Corral** - *ENGworks*
+* **Jason Ekensten** - *Resorts World Las Vegas*
 
 ## License
 [MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)
