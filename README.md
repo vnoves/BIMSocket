@@ -1,15 +1,13 @@
-<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Socket-01.png' width='500' alt='Automerge logo' />
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Socket-01.png' width='500' alt='BIMSocket logo' align="left" />
 
-# BIMSocket
 
 *Keeping you conected*
 =====================================================
 
-<img src="kanganru.png" align="left" width="100" height="150" />
+💬 [Join the BIMSocket community](https://aec-hackathon.slack.com/archives/C016TLPNEJH)
 
 This project has been developed in July 2020 during the AEC Tech Hackathon.You can find the presentation of the idea
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
-
 
 
 ## Authors
@@ -17,22 +15,6 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 * **Pablo Derendinger** - *Engowrks* 
 * **Alexander Corral** - *ENGworks*
 * **Jason Ekensten** - *Resorts World Las Vegas*
-
-Feature
-* 3D Paradigm Shift Enabler
-* Client Presentation
-* Sketches Educational App
-
-
-Presentation: 
-https://docs.google.com/presentation/d/1uL1N66qP9okW5KsW7J7cxcwzE3m1eett8EwkJiCczc4/edit?usp=sharing
-
-
-We developed the back end part of the Outback project that has been divided in 2 parts: 
-
-* GANgaru
-* Joey
-
 
 ## Getting Started
 
