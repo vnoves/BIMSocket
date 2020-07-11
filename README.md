@@ -12,7 +12,7 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 
 ## How it works ##
 
-<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='300' alt='Conections logo' />
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='150' alt='Conections logo' />
 
 BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in the industry in real time. For the hackathon we will connect Revit, a Three JS viewer and Unity (maybe be Rhino as well) to our socket and show how it works.
 
