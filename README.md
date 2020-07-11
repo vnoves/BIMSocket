@@ -29,7 +29,19 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 
 
 ## References
+Json:
 https://github.com/va3c/RvtVa3c
+Unity:
+
+Revit:
+
+Three.js:
+https://threejs.org/
+https://threejs.org/docs/#api/en/loaders/ObjectLoader
+
+Unity:
+https://github.com/SaladLab/Json.Net.Unity3D
+https://github.com/Mcklem/JSONGameObject
 
 ## Authors
 * **Valentin Noves** - *ENGworks* 
