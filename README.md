@@ -16,11 +16,15 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 * **Alexander Corral** - *ENGworks*
 * **Jason Ekensten** - *Resorts World Las Vegas*
 
+## Contribute ##
+
+BIMSocket is an open-source project. You can make suggestions or track and submit bugs via Github issues.  You can submit your own code to the BIMSocket project via a Github pull request.
+
 ## Getting Started
 
 
 
-### Prerequisites
+## Prerequisites
 
 
 
@@ -29,4 +33,4 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 
 
 ## License
-MIT Licence
+[MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)
