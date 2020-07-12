@@ -26,7 +26,7 @@ namespace BIMSocket
 
             if (_doc.ActiveView.ViewType != ViewType.ThreeD)
             {
-                var td = new TaskDialog("Wrongview type");
+                var td = new TaskDialog("Wrong view type");
                 td.MainInstruction =  "Select a 3D View to start the app";
                 td.Show();
                 return Result.Cancelled;

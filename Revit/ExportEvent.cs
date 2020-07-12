@@ -14,9 +14,9 @@ namespace BIMSocket
         {
             MainCommand._doc = app.ActiveUIDocument.Document;
 
-            FireBaseConnection.ExportChanges();
+            FireBaseConnection.Connect();
 
-            FireBaseConnection.changedElements = new List<ElementId>();
+            RevitManagement.changedElements = new List<ElementId>();
 
             var changedElementsToRemove = MainForm.changedElements.ToList();
             foreach (var item in changedElementsToRemove)

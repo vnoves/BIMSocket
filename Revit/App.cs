@@ -112,17 +112,17 @@ namespace BIMSocket
             var deletedElements = e.GetDeletedElementIds();
             var modifiedElements = e.GetModifiedElementIds(FamilyInstanceFilter);
 
-            if (FireBaseConnection.changedElements == null)
+            if (RevitManagement.changedElements == null)
             {
-                FireBaseConnection.changedElements = new List<ElementId>();
+                RevitManagement.changedElements = new List<ElementId>();
             }
 
-            FireBaseConnection.changedElements.AddRange(addedElements);
-            FireBaseConnection.changedElements.AddRange(modifiedElements);
-            FireBaseConnection.deletedElements = deletedElements.ToList();
-            FireBaseConnection.changedElements = FireBaseConnection.changedElements.Distinct().ToList();
+            RevitManagement.changedElements.AddRange(addedElements);
+            RevitManagement.changedElements.AddRange(modifiedElements);
+            RevitManagement.deletedElements = deletedElements.ToList();
+            RevitManagement.changedElements = RevitManagement.changedElements.Distinct().ToList();
 
-            foreach (var item in FireBaseConnection.changedElements)
+            foreach (var item in RevitManagement.changedElements)
             {
                 if (!MainForm.changedElements.Contains(item))
                 {

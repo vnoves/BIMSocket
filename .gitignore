@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Revit/obj/Debug
+/Revit/bin/Debug
+*.suo
+/Revit/packages
+/Revit/bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json
