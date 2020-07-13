@@ -14,7 +14,9 @@ namespace BIMSocket
         {
             MainCommand._doc = app.ActiveUIDocument.Document;
 
-            FireBaseConnection.Connect();
+            var changes = RevitManagement.ProcessLocalChanges();
+
+            FireBaseConnection.SendChangesToDB(changes, null);
 
             RevitManagement.changedElements = new List<ElementId>();
 

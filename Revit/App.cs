@@ -33,6 +33,11 @@ namespace BIMSocket
         public Result OnStartup(UIControlledApplication application)
         {
 
+            System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
+
+            currentDomain.AssemblyResolve += new ResolveEventHandler(currentDomain_AssemblyResolve);
+
+
             try
             {
                 application.ControlledApplication.DocumentChanged +=
@@ -99,6 +104,25 @@ namespace BIMSocket
 
         }
 
+        System.Reflection.Assembly currentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.Contains("Apis.Auth"))
+            {
+                string filename = Path.GetDirectoryName(
+                  System.Reflection.Assembly
+                    .GetExecutingAssembly().Location);
+
+                filename = Path.Combine(filename,
+                  "Google.Apis.Auth.dll");
+
+                if (File.Exists(filename))
+                {
+                    return System.Reflection.Assembly
+                      .LoadFrom(filename);
+                }
+            }
+            return null;
+        }
 
 
         private void documentChangedEventFillingListOfElements(object sender, DocumentChangedEventArgs e)
