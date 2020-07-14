@@ -1,10 +1,12 @@
 ﻿
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 public class Rootobject
 {
-    public Geometry[] geometries { get; set; }
-    public Material[] materials { get; set; }
+    public  List<Geometry> geometries { get; set; }
+    public List<Material> materials { get; set; }
     public Metadata metadata { get; set; }
 
     [JsonProperty("Object")]
@@ -24,7 +26,7 @@ public class Object
     public string name { get; set; }
     public string type { get; set; }
     public float[] matrix { get; set; }
-    public Child[] children { get; set; }
+    public List<Child> children { get; set; }
 }
 
 public class Child
