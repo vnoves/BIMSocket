@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Name="MainWindow"
-        Height="395.355" Width="240" 
+        Height="450" Width="240" 
         MinHeight="280" MinWidth="240" 
-        MaxHeight="400" MaxWidth="240" 
+        MaxHeight="450" MaxWidth="240" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" Title="{Binding Path=ProjectName}"
         Style="{DynamicResource CustomWindowStyle}" 
@@ -35,16 +35,20 @@
             <!--Main Form elements-->
             <Button Name="Mainbutton" 
                     Style="{DynamicResource MainButtonStyle}"  
-                    Margin="8,312,0,10"
+                    Margin="8,367,0,10"
                     HorizontalAlignment="Left" Content="Apply"  Click="Mainbutton_Click"/>
-            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,83,0,0" VerticalAlignment="Top" Width="180" x:Name="ChangesList" ItemsSource="{Binding changedElements}" />
-            <ListBox HorizontalAlignment="Left" Height="99" Margin="8,199,0,0" VerticalAlignment="Top" Width="180" x:Name="ReceivingList" ItemsSource="{Binding changedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,148,0,0" VerticalAlignment="Top" Width="180" x:Name="ChangesList" ItemsSource="{Binding changedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="99" Margin="8,263,0,0" VerticalAlignment="Top" Width="180" x:Name="ReceivingList" ItemsSource="{Binding changedElements}" />
             <Label Style="{DynamicResource VersionLabel}" 
-                Margin="42,64,0,274" 
+                Margin="42,129,0,264" 
                 HorizontalAlignment="Left" Content="SEND" HorizontalContentAlignment="Left" Width="112"/>
             <Label Style="{DynamicResource VersionLabel}" 
-                Margin="42,180,0,158" 
+                Margin="42,244,0,149" 
                 HorizontalAlignment="Left" Content="RECEIVE" HorizontalContentAlignment="Left" Width="112"/>
+            <Button x:Name="SendModel" 
+                Style="{DynamicResource MainButtonStyle}"  
+                Margin="8,94,0,283"
+                HorizontalAlignment="Left" Content="Send Model"  Click="SendModel_Click"/>
         </Grid>
     </Border>
 

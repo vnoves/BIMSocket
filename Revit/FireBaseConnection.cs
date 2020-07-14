@@ -15,6 +15,7 @@ using System.Windows.Documents;
 using System.Collections.Generic;
 using DocumentReference = Google.Cloud.Firestore.DocumentReference;
 using Google.Apis.Util;
+using System.Drawing.Drawing2D;
 
 namespace BIMSocket
 {
@@ -22,7 +23,7 @@ namespace BIMSocket
     {
 
         static string  CollectionName = "models";
-        static string  DocumentName = "test1";
+        static string  DocumentName = MainCommand._doc.Title;
 
         private static FirestoreDb firestoreDb;
 
@@ -43,13 +44,20 @@ namespace BIMSocket
             }
 
         }
+        internal static async void SendModelToDB(Rootobject model, string CollectionName, string ModelName)
+        {
+            Rootobject RootObject = new Rootobject();
+            var models = firestoreDb.Collection(CollectionName).Document(ModelName);
+            await models.SetAsync(model);
+
+        }
 
 
-        internal static async void SendChangesToDB(Rootobject LocalModifications, string deleted)
+
+            internal static async void SendChangesToDB(Rootobject LocalModifications, string deleted)
         {
             try
             {
-
 
                 var ServerModel = await GetModelFromServer(CollectionName, DocumentName);
 
@@ -65,7 +73,7 @@ namespace BIMSocket
                 UpdateRootObject(ServerGeometry, LocalModifications.geometries);
 
                 UpdateRootObject(ServerMaterials, LocalModifications.materials);
-
+                var jsonObject = Newtonsoft.Json.JsonConvert.SerializeObject(ServerModel);
                 await firestoreDb.Collection(CollectionName).Document(DocumentName).SetAsync(ServerModel);
 
             }
@@ -75,6 +83,7 @@ namespace BIMSocket
                 return;
             }
         }
+
 
         private static void UpdateRootObject<T>(List<T> RootChildren, List<T> obj)
         {
@@ -87,8 +96,13 @@ namespace BIMSocket
                 if (existingObjectToUpdate != null)
                 {
                     RootChildren[i] = existingObjectToUpdate;
+                    obj.Remove(existingObjectToUpdate);
                 }
-                else
+                
+            }
+            if (obj.Any())
+            {
+                foreach (var item in obj)
                 {
                     RootChildren.Add(item);
                 }
@@ -110,8 +124,9 @@ namespace BIMSocket
         private static async Task<Rootobject> GetModelFromServer(string CollectionName, string DocumentName)
         {
             Rootobject RootObject = new Rootobject();
-            DocumentReference models = firestoreDb.Collection(CollectionName).Document(DocumentName);
-            DocumentSnapshot snapshot = await models.GetSnapshotAsync();
+            var models = firestoreDb.Collection(CollectionName).Document(DocumentName);
+            var snapshot = await models.GetSnapshotAsync();
+
             if (snapshot.Exists)
             {
                 Console.WriteLine("Document data for {0} document:", snapshot.Id);

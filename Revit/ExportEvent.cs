@@ -29,7 +29,23 @@ namespace BIMSocket
 
         public string GetName()
         {
-            return "External Event ClashDetective";
+            return "External Event export changes";
+        }
+    }
+
+    class ExportModelEvent : IExternalEventHandler
+    {
+        public void Execute(UIApplication app)
+        {
+            MainCommand._doc = app.ActiveUIDocument.Document;
+
+            var ro = RevitManagement.ProcessAllModel();
+            FireBaseConnection.SendModelToDB(ro, "models", MainCommand._doc.Title);
+        }
+
+        public string GetName()
+        {
+            return "External Event Export model";
         }
     }
 }
