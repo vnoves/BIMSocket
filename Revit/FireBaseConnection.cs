@@ -31,7 +31,7 @@ namespace BIMSocket
         {
             try
             {
-                string path = @"C:\Users\pderendinger\source\repos\BIMSocket\Revit\bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json";
+                string path = @"C:\Users\vnoves\Desktop\bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json";
                 FirestoreClientBuilder builder = new FirestoreClientBuilder();
                 builder.CredentialsPath = path;
                 var client = builder.Build();
