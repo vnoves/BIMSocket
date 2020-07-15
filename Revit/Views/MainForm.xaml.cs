@@ -43,11 +43,18 @@ namespace BIMSocket
         {
             this.DataContext = this;
             this.p_commanddata = cmddata_p;
+            RevitManagement.changedElements = new List<ElementId>();
             changedElements = new ObservableCollection<ElementId>();
             InitializeComponent();
             bool connected = ConnectToDB();
- 
+            this.Closed += ClosingWindow;
             this.ChangesList.ItemsSource = changedElements;
+        }
+
+        private void ClosingWindow(object sender, EventArgs e)
+        {
+            RevitManagement.changedElements = new List<ElementId>();
+            changedElements = new ObservableCollection<ElementId>();
         }
 
         private bool ConnectToDB()
@@ -85,6 +92,11 @@ namespace BIMSocket
         public static void RemoveItem(ElementId elementId)
         {
             changedElements.Remove(elementId);
+        }
+
+        private void SendModel_Click(object sender, RoutedEventArgs e)
+        {
+            App.exEventB.Raise();
         }
     }
 }

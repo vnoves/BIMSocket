@@ -12,6 +12,12 @@ namespace BIMSocket
     {
         internal static List<ElementId> changedElements;
         internal static List<ElementId> deletedElements;
+
+        internal static Rootobject ProcessAllModel()
+        {
+            return ConvertModelToRootObject();
+        }
+
         internal static Rootobject ProcessLocalChanges()
         {
 
@@ -24,7 +30,7 @@ namespace BIMSocket
 
             #region Format changed elements 
 
-            Rootobject changed = ConvertChangedElementsToRootObject(changedElements);
+            Rootobject changed = ConvertModelToRootObject();
             #endregion
 
             ResetsElementsIn3DView();
@@ -42,11 +48,13 @@ namespace BIMSocket
 
         }
 
-        private static Rootobject ConvertChangedElementsToRootObject(ICollection<ElementId> changedElements)
+
+
+        private static Rootobject ConvertModelToRootObject()
         {
 
             var document = MainCommand.GetCurrentDocument();
-            string jsonPath = ExportToJson(document, changedElements.ToList());
+            string jsonPath = ExportToJson(document);
 
             var jsonString = "";
             using (StreamReader streamReader = new StreamReader(jsonPath))
@@ -61,10 +69,28 @@ namespace BIMSocket
         private static Rootobject FormatChanges(string jsonString)
         {
             //TODO: leave it here if changes are needed before export
-            return JsonConvert.DeserializeObject<Rootobject>(jsonString); ;
+            try
+            {
+                var e = JsonConvert.DeserializeObject<Rootobject>(jsonString);
+                return e;
+            }
+     catch (Exception ex)
+            {
+                return null;
+            }
         }
 
-        private static string ExportToJson(Document document, List<ElementId> ListOfElements)
+        private static string ExportToJson()
+        {
+            RvtVa3c.Command command = new RvtVa3c.Command();
+            View3D view3D = MainCommand.GetExportView3D();
+            var jsonPath = Path.GetTempPath() + "BIMSocket.json";
+
+            command.ExportView3D(view3D, jsonPath);
+            return jsonPath;
+        }
+
+        private static string ExportToJson(Document documents)
         {
             RvtVa3c.Command command = new RvtVa3c.Command();
             View3D view3D = MainCommand.GetExportView3D();

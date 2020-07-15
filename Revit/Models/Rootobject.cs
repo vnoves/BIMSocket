@@ -1,162 +1,154 @@
 ﻿
+using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Windows.Documents;
 
+[FirestoreData]
 public class Rootobject
 {
-    public  List<Geometry> geometries { get; set; }
+    [FirestoreProperty]
+
+    public List<Geometry> geometries { get; set; }
+
+    [FirestoreProperty]
     public List<Material> materials { get; set; }
+    [FirestoreProperty]
+
     public Metadata metadata { get; set; }
 
-    [JsonProperty("Object")]
+    [JsonProperty("object")]
+    [FirestoreProperty(Name ="object")]
+
     public Object _object { get; set; }
 }
 
+[FirestoreData]
 public class Metadata
 {
+    [FirestoreProperty]
     public string type { get; set; }
+    [FirestoreProperty]
     public float version { get; set; }
+
+    [FirestoreProperty]
+
     public string generator { get; set; }
 }
 
+[FirestoreData]
 public class Object
 {
+    [FirestoreProperty]
+
     public string uuid { get; set; }
+    [FirestoreProperty]
     public string name { get; set; }
+    [FirestoreProperty]
     public string type { get; set; }
+    [FirestoreProperty]
     public float[] matrix { get; set; }
+    [JsonProperty("children")]
+    [FirestoreProperty]
     public List<Child> children { get; set; }
 }
 
+[FirestoreData]
 public class Child
 {
+    [FirestoreProperty]
     public string uuid { get; set; }
+    [FirestoreProperty]
     public string name { get; set; }
+    [FirestoreProperty]
     public string type { get; set; }
+    [FirestoreProperty]
     public float[] matrix { get; set; }
+    [FirestoreProperty]
     public Children[] children { get; set; }
+    [FirestoreProperty]
     public Userdata userData { get; set; }
+    [FirestoreProperty]
     public string material { get; set; }
 }
-
+[FirestoreData]
 public class Userdata
 {
-    public string InstallDepthfromoutside { get; set; }
+    [FirestoreProperty]
     public string Level { get; set; }
-    public string SillHeight { get; set; }
-    public string PhaseCreated { get; set; }
-    public string PhaseDemolished { get; set; }
-    public string Frame { get; set; }
-    public string Glass { get; set; }
-    public string Casement { get; set; }
-    public string WindowCillInterior { get; set; }
-    public string WindowCillExterior { get; set; }
-    public string BottomHungCasement { get; set; }
-    public string TopHungCasement { get; set; }
-    public string CasementSwinginPlan { get; set; }
-    public string CasementPivot { get; set; }
-    public string RoughWidth { get; set; }
-    public string RoughHeight { get; set; }
+    [FirestoreProperty]
     public string Height { get; set; }
+    [FirestoreProperty]
     public string Width { get; set; }
-    public string Image { get; set; }
+    [FirestoreProperty]
     public string Mark { get; set; }
-    public string HeadHeight { get; set; }
-    public string TypeAnalyticConstruction { get; set; }
-    public string TypeDefineThermalPropertiesby { get; set; }
-    public string TypeVisualLightTransmittance { get; set; }
-    public string TypeSolarHeatGainCoefficient { get; set; }
-    public string TypeThermalResistanceR { get; set; }
-    public string TypeHeatTransferCoefficientU { get; set; }
-    public string TypeOperation { get; set; }
-    public string TypeFrameDepth { get; set; }
-    public string TypeFrameDepthunder { get; set; }
-    public string TypeFrameDepthover { get; set; }
-    public string TypeFrameWidth { get; set; }
-    public string TypeCasementDepth { get; set; }
-    public string TypeCasementWidth { get; set; }
-    public string TypeWallClosure { get; set; }
-    public string TypeDescription { get; set; }
-    public string TypeTypeImage { get; set; }
-    public string TypeCost { get; set; }
-    public string TypeTypeMark { get; set; }
-    public string revit_id { get; set; }
-    public string ViewName { get; set; }
-    public string Dependency { get; set; }
-    public string DetailLevel { get; set; }
-    public string PartsVisibility { get; set; }
-    public string CropView { get; set; }
-    public string CropRegionVisible { get; set; }
-    public string FarClipActive { get; set; }
-    public string FarClipOffset { get; set; }
-    public string PhaseFilter { get; set; }
-    public string Phase { get; set; }
-    public string ScopeBox { get; set; }
-    public string Discipline { get; set; }
-    public string DefaultAnalysisDisplayStyle { get; set; }
-    public string LockedOrientation { get; set; }
-    public string ProjectionMode { get; set; }
-    public string EyeElevation { get; set; }
-    public string TargetElevation { get; set; }
-    public string CameraPosition { get; set; }
-    public string SectionBox { get; set; }
-    public string None { get; set; }
-    public string SunPath { get; set; }
-    public string TypeNewviewsaredependentontemplate { get; set; }
-    public string TypeCoarsePocheMaterial { get; set; }
-    public string ViewScale { get; set; }
-    public string ScaleValue1 { get; set; }
-    public string DetailNumber { get; set; }
-    public string SheetNumber { get; set; }
-    public string SheetName { get; set; }
-    public string RotationonSheet { get; set; }
-    public string AnnotationCrop { get; set; }
-    public string ShowHiddenLines { get; set; }
 }
 
+[FirestoreData]
 public class Children
 {
+    [FirestoreProperty]
     public string uuid { get; set; }
+    [FirestoreProperty]
     public string name { get; set; }
+    [FirestoreProperty]
     public string type { get; set; }
+    [FirestoreProperty]
     public float[] matrix { get; set; }
+    [FirestoreProperty]
     public string geometry { get; set; }
+    [FirestoreProperty]
     public string material { get; set; }
 }
 
+[FirestoreData]
 public class Geometry
 {
-    public string uuid { get; set; }
-    public string type { get; set; }
-    public Data data { get; set; }
+  [FirestoreProperty] public string uuid { get; set; }
+  [FirestoreProperty] public string type { get; set; }
+
+    [JsonProperty("data")] [FirestoreProperty]  Data data { get; set; }
 }
 
+[FirestoreData]
 public class Data
 {
-    public float[] vertices { get; set; }
-    public object[] normals { get; set; }
-    public object[] uvs { get; set; }
-    public int[] faces { get; set; }
-    public float scale { get; set; }
-    public bool visible { get; set; }
+    [FirestoreProperty]
+    public List<object> normals { get; set; }
+    [FirestoreProperty]
+    public List<int> faces { get; set; }
+    [FirestoreProperty]
     public bool castShadow { get; set; }
+    [FirestoreProperty]
     public bool receiveShadow { get; set; }
+    [FirestoreProperty]
+    public List<object> uvs { get; set; }
+    [FirestoreProperty]
     public bool doubleSided { get; set; }
+
+    [FirestoreProperty]
+    public float scale { get; set; }
+    [FirestoreProperty]
+    public List<float> vertices { get; set; }
+    [FirestoreProperty]
+    public bool visible { get; set; }
+
 }
 
+
+[FirestoreData]
 public class Material
 {
-    public string uuid { get; set; }
-    public string name { get; set; }
-    public string type { get; set; }
-    public int color { get; set; }
-    public int ambient { get; set; }
-    public int emissive { get; set; }
-    public int specular { get; set; }
-    public int shininess { get; set; }
-    public float opacity { get; set; }
-    public bool transparent { get; set; }
-    public bool wireframe { get; set; }
+  [FirestoreProperty] public string uuid { get; set; }
+  [FirestoreProperty] public string name { get; set; }
+  [FirestoreProperty] public string type { get; set; }
+  [FirestoreProperty] public int color { get; set; }
+  [FirestoreProperty] public int ambient { get; set; }
+  [FirestoreProperty] public int emissive { get; set; }
+  [FirestoreProperty] public int specular { get; set; }
+  [FirestoreProperty] public int shininess { get; set; }
+  [FirestoreProperty] public float opacity { get; set; }
+  [FirestoreProperty] public bool transparent { get; set; }
+  [FirestoreProperty] public bool wireframe { get; set; }
 }
 

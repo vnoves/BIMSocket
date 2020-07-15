@@ -19,6 +19,7 @@ namespace BIMSocket
         static Type myType = typeof(App);
         static string nameSpaceNm = myType.Namespace;
         internal static ExternalEvent exEvent;
+        internal static ExternalEvent exEventB;
 
         public static string NameSpaceNm
 
@@ -99,6 +100,11 @@ namespace BIMSocket
             // External Event for the dialog to use (to post requests)
             exEvent = ExternalEvent.Create(handler);
 
+            // A new handler to handle request posting by the dialog
+            ExportModelEvent handlerB = new ExportModelEvent();
+
+            // External Event for the dialog to use (to post requests)
+            exEventB = ExternalEvent.Create(handlerB);
 
             return Result.Succeeded;
 
@@ -127,15 +133,15 @@ namespace BIMSocket
 
         private void documentChangedEventFillingListOfElements(object sender, DocumentChangedEventArgs e)
         {
-            if (MainForm.changedElements ==null)
+            if (MainForm.changedElements == null)
             { return; }
-
+            
 
             ElementClassFilter FamilyInstanceFilter = new ElementClassFilter(typeof(FamilyInstance));
             var addedElements = e.GetAddedElementIds(FamilyInstanceFilter);
             var deletedElements = e.GetDeletedElementIds();
             var modifiedElements = e.GetModifiedElementIds(FamilyInstanceFilter);
-
+ 
             if (RevitManagement.changedElements == null)
             {
                 RevitManagement.changedElements = new List<ElementId>();
