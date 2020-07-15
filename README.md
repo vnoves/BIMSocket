@@ -70,10 +70,10 @@ https://github.com/SaladLab/Json.Net.Unity3D
 https://github.com/Mcklem/JSONGameObject
 
 ## Authors
-*[ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)
-*[**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)
-*[**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)
-*[**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)
+*[ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
+*[**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
+*[**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)<br/>
+*[**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)<br/>
 
 ## License
 [MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)
