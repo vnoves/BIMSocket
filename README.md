@@ -70,7 +70,7 @@ https://github.com/SaladLab/Json.Net.Unity3D
 https://github.com/Mcklem/JSONGameObject
 
 ## Authors
-* **Valentin Noves** - *ENGworks* 
+[* **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)
 * **Pablo Derendinger** - *Engowrks* 
 * **Alexander Corral** - *ENGworks*
 * **Jason Ekensten** - *Resorts World Las Vegas*
