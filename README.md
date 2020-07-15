@@ -47,6 +47,8 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 
 [Rhino 6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
 
+[Json](https://github.com/json-schema-org/json-schema-spec)
+
 ## References
 Json:
 https://github.com/va3c/RvtVa3c
