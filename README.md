@@ -71,9 +71,9 @@ https://github.com/Mcklem/JSONGameObject
 
 ## Authors
 *[ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)
-* **Pablo Derendinger** - *Engowrks* 
-* **Alexander Corral** - *ENGworks*
-* **Jason Ekensten** - *Resorts World Las Vegas*
+*[**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)
+*[**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)
+*[**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)
 
 ## License
 [MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)
