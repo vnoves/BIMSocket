@@ -43,9 +43,12 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 ## References
 Json:
 https://github.com/va3c/RvtVa3c
+
 Unity:
+https://firebase.google.com/docs/unity/setup
 
 Revit:
+https://github.com/jeremytammik/DirectObjLoader
 
 Three.js:
 https://threejs.org/
