@@ -39,17 +39,13 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 ## Prerequisites
 
 ## Versions
-Revit:
-[Revit: 2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)
+[Revit: 2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)<br/>
 
-Threejs:
-[Threejs: 103](https://github.com/mrdoob/three.js/releases/tag/r103)
+[Threejs: 103](https://github.com/mrdoob/three.js/releases/tag/r103)<br/>
 
-Unity:
-[Unity: 2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)
+[Unity: 2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)<br/>
 
-Rhino 6:
-[Rhino 6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)
+[Rhino 6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
 
 ## References
 Json:
@@ -70,10 +66,10 @@ https://github.com/SaladLab/Json.Net.Unity3D
 https://github.com/Mcklem/JSONGameObject
 
 ## Authors
-*[ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
-*[**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
-*[**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)<br/>
-*[**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)<br/>
+* [ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
+* [**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
+* [**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)<br/>
+* [**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)<br/>
 
 ## License
 [MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)
