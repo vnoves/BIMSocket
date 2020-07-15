@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -30,9 +31,34 @@ namespace BIMSocket
 
         public UIApplication uiApp;
 
-        internal static ObservableCollection<ElementId> changedElements;
+
+        private readonly object _changedElementsLock = new object();
+        internal static ObservableCollection<ElementId> _changedElements;
+
+        public ObservableCollection<ElementId> ChangedElementsCollection
+        {
+            get { return _changedElements; }
+            set
+            {
+                _changedElements = value;
+
+                BindingOperations.EnableCollectionSynchronization(_changedElements, _changedElementsLock);
+            }
+        }
 
 
+        private readonly object _receviedElementslock = new object();
+        internal static ObservableCollection<ElementId> _receivedElements;
+
+        public ObservableCollection<ElementId> ReceivedElementsCollection
+        {
+            get { return _receivedElements; }
+            set
+            {
+                _receivedElements = value;
+                BindingOperations.EnableCollectionSynchronization(_receivedElements, _receviedElementslock);
+            }
+        }
 
 
         /// <summary>
@@ -43,24 +69,39 @@ namespace BIMSocket
         {
             this.DataContext = this;
             this.p_commanddata = cmddata_p;
-            RevitManagement.changedElements = new List<ElementId>();
-            changedElements = new ObservableCollection<ElementId>();
+
+            cleanVariables();
+
             InitializeComponent();
+
+            this._doc = cmddata_p.Application.ActiveUIDocument.Document;
             bool connected = ConnectToDB();
+            FireBaseConnection.ReceiveChangesFromDB();
             this.Closed += ClosingWindow;
-            this.ChangesList.ItemsSource = changedElements;
+            this.SendChangesList.ItemsSource = ChangedElementsCollection;
+            this.ReceiveChangesList.ItemsSource = ReceivedElementsCollection;
         }
 
+        private void cleanVariables()
+        {
+            ChangedElementsCollection.Clear();
+
+            RevitManagement.changedElements = new List<ElementId>();
+
+
+            ReceivedElementsCollection.Clear();
+            RevitManagement.geometryChanges = new Dictionary<ElementId, Child>();
+
+        }
         private void ClosingWindow(object sender, EventArgs e)
         {
-            RevitManagement.changedElements = new List<ElementId>();
-            changedElements = new ObservableCollection<ElementId>();
+            cleanVariables();
         }
 
         private bool ConnectToDB()
         {
-            
-            return FireBaseConnection.Connect();
+
+            return FireBaseConnection.Connect("models", this._doc.Title);
         }
 
         public string projectName = App.NameSpaceNm;
@@ -78,25 +119,22 @@ namespace BIMSocket
 
         private void Mainbutton_Click(object sender, RoutedEventArgs e)
         {
-            App.exEvent.Raise();
+            if (this.SendChangesList.Items.Count >= 0)
+            {
+                App.ExportChangesExternalEvent.Raise();
+            }
 
+            if (this.ReceiveChangesList.Items.Count >= 0)
+            {
+                App.ReceiveChangesExternalEvent.Raise();
+                
+            }
 
-
-        }
-
-        public static void AddItem(ElementId elementId)
-        {
-            changedElements.Add(elementId);
-        }
-
-        public static void RemoveItem(ElementId elementId)
-        {
-            changedElements.Remove(elementId);
         }
 
         private void SendModel_Click(object sender, RoutedEventArgs e)
         {
-            App.exEventB.Raise();
+            App.ExportModelExternalEvent.Raise();
         }
     }
 }

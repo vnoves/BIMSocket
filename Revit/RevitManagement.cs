@@ -12,6 +12,9 @@ namespace BIMSocket
     {
         internal static List<ElementId> changedElements;
         internal static List<ElementId> deletedElements;
+        internal static Dictionary<ElementId, Child> geometryChanges;
+
+        public static Rootobject CurrentRootObject { get; internal set; }
 
         internal static Rootobject ProcessAllModel()
         {
@@ -39,7 +42,7 @@ namespace BIMSocket
             var deleted = "";
             if (deletedElements != null)
             {
-                deleted =  ConvertDeletedElementsToJson(deletedElements);
+                deleted = ConvertDeletedElementsToJson(deletedElements);
             }
 
             #endregion
@@ -66,6 +69,26 @@ namespace BIMSocket
 
         }
 
+        internal static void ApplyGeometryChanges(Document doc)
+        {
+            foreach (KeyValuePair<ElementId, Child> change in geometryChanges)
+            {
+                var element = doc.GetElement(change.Key);
+                var matrix = change.Value.matrix;
+                Transform transform = Transform.Identity;
+                transform.BasisX = new XYZ(matrix[0], matrix[1], matrix[2]);
+                transform.BasisY = new XYZ(matrix[3], matrix[4], matrix[5]);
+                transform.BasisZ = new XYZ(matrix[6], matrix[7], matrix[8]);
+                
+                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisX);
+                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisY);
+                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisZ);
+
+
+            }
+            
+        }
+
         private static Rootobject FormatChanges(string jsonString)
         {
             //TODO: leave it here if changes are needed before export
@@ -74,7 +97,7 @@ namespace BIMSocket
                 var e = JsonConvert.DeserializeObject<Rootobject>(jsonString);
                 return e;
             }
-     catch (Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -109,28 +132,28 @@ namespace BIMSocket
             {
 
                 using (Transaction tx = new Transaction(doc))
-            {
-
-                tx.Start("Isolate");
-                if (view.IsTemporaryHideIsolateActive())
                 {
-                    TemporaryViewMode tempView = TemporaryViewMode.TemporaryHideIsolate;
-                    view.DisableTemporaryViewMode(tempView);
-                }
+
+                    tx.Start("Isolate");
+                    if (view.IsTemporaryHideIsolateActive())
+                    {
+                        TemporaryViewMode tempView = TemporaryViewMode.TemporaryHideIsolate;
+                        view.DisableTemporaryViewMode(tempView);
+                    }
 
                     view.IsolateElementsTemporary(elementsList);
 
-                tx.Commit();
+                    tx.Commit();
 
                     return true;
-            }
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
             }
-            
+
         }
 
 
@@ -167,7 +190,7 @@ namespace BIMSocket
         private static string ConvertDeletedElementsToJson(ICollection<ElementId> deletedElements)
         {
 
-            return FormatDeleted(deletedElements.Select(x=>x.IntegerValue));
+            return FormatDeleted(deletedElements.Select(x => x.IntegerValue));
         }
 
         private static string FormatDeleted(IEnumerable<int> ElementIdsAsInteger)
@@ -176,7 +199,52 @@ namespace BIMSocket
             return JsonConvert.SerializeObject(ElementIdsAsInteger);
         }
 
+        internal static void ProcessRemoteChanges(Rootobject newRootObject)
+        {
+            if (CurrentRootObject != null)
+            {
+                CompareRootObjects(newRootObject, CurrentRootObject);
+            }
+            CurrentRootObject = newRootObject;
+        }
 
-      
+        private static void CompareRootObjects(Rootobject newRootObject, Rootobject currentRootObject)
+        {
+            var currentObjectsUuid = currentRootObject._object.children.Select(x => x.uuid);
+            var newObjects = newRootObject._object.children.Where(x => !currentObjectsUuid.Contains(x.uuid)).ToList();
+            var existingObjects = newRootObject._object.children.Where(x => currentObjectsUuid.Contains(x.uuid)).ToList();
+            var modifiedGeometry = GetModifiedGeometry(existingObjects, currentRootObject);
+
+            SaveReceivedChanges(modifiedGeometry);
+            //TODO how to determ changes in geometry
+        }
+
+        private static void SaveReceivedChanges(List<Child> modifiedGeometry)
+        {
+            geometryChanges = new Dictionary<ElementId, Child>();
+            foreach (var item in modifiedGeometry)
+            {
+                var element = MainCommand._doc.GetElement(item.uuid);
+                if (element!= null)
+                {
+                    geometryChanges[element.Id] = item;
+                    if (!MainForm._receivedElements.Contains(element.Id))
+                    {
+                        MainForm._receivedElements.Add(element.Id);
+                    }
+                    
+                }
+            }
+            
+        }
+
+        private static List<Child> GetModifiedGeometry(List<Child> existingObjects, Rootobject currentRootObject)
+        {
+            var identity = new float[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+
+            var geometryChanged = existingObjects.Where(x => !x.matrix.SequenceEqual(identity)).ToList();
+            return geometryChanged;
+
+        }
     }
 }

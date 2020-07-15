@@ -20,11 +20,7 @@ namespace BIMSocket
 
             RevitManagement.changedElements = new List<ElementId>();
 
-            var changedElementsToRemove = MainForm.changedElements.ToList();
-            foreach (var item in changedElementsToRemove)
-            {
-                MainForm.RemoveItem(item);
-            }
+            MainForm._changedElements.Clear();
         }
 
         public string GetName()
@@ -39,8 +35,8 @@ namespace BIMSocket
         {
             MainCommand._doc = app.ActiveUIDocument.Document;
 
-            var ro = RevitManagement.ProcessAllModel();
-            FireBaseConnection.SendModelToDB(ro, "models", MainCommand._doc.Title);
+            var CurrentRootObject = RevitManagement.ProcessAllModel();
+            FireBaseConnection.SendModelToDB(CurrentRootObject, "models", MainCommand._doc.Title);
         }
 
         public string GetName()
@@ -48,6 +44,28 @@ namespace BIMSocket
             return "External Event Export model";
         }
     }
+
+    class ReceiveChangesEvent : IExternalEventHandler
+    {
+        public void Execute(UIApplication app)
+        {
+            MainCommand._doc = app.ActiveUIDocument.Document;
+            using (Transaction tx = new Transaction(MainCommand._doc,"Updating Model"))
+            {
+                tx.Start();
+                RevitManagement.ApplyGeometryChanges(MainCommand._doc);
+
+                tx.Commit();
+                MainForm._receivedElements.Clear();
+            }
+        }
+
+        public string GetName()
+        {
+            return "External Event apply changes in model";
+        }
+    }
+
 }
 
 
