@@ -10,7 +10,7 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
 
 
-## How it works ##
+## What is BIMSOCKet for? ##
 
 <img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='150' alt='Conections logo' />
 
