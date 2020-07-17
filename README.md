@@ -10,7 +10,7 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
 
 
-## How it works ##
+## What is BIMSOCKet for? ##
 
 <img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='150' alt='Conections logo' />
 
@@ -38,14 +38,32 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 
 ## Prerequisites
 
+## Versions
+Json:
+[V3](https://github.com/json-schema-org/json-schema-spec)
+
+Unity:
+[2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)<br/>
+
+Revit:
+[2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)<br/>
+
+Three.js:
+[103](https://github.com/mrdoob/three.js/releases/tag/r103)<br/>
+
+Rhino:
+[6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
 
 
 ## References
 Json:
 https://github.com/va3c/RvtVa3c
+
 Unity:
+https://firebase.google.com/docs/unity/setup
 
 Revit:
+https://github.com/jeremytammik/DirectObjLoader
 
 Three.js:
 https://threejs.org/
@@ -56,10 +74,10 @@ https://github.com/SaladLab/Json.Net.Unity3D
 https://github.com/Mcklem/JSONGameObject
 
 ## Authors
-* **Valentin Noves** - *ENGworks* 
-* **Pablo Derendinger** - *Engowrks* 
-* **Alexander Corral** - *ENGworks*
-* **Jason Ekensten** - *Resorts World Las Vegas*
+* [ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
+* [**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
+* [**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)<br/>
+* [**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)<br/>
 
 ## License
 [MIT Licence](https://github.com/vnoves/BIMSocket/blob/master/LICENSE)

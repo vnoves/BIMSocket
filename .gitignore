@@ -7,3 +7,12 @@
 *.suo
 /Revit/packages
 /Revit/bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json
+/Unity/JsonMeshImport/Library
+/Unity/JsonMeshImport/Logs
+/Unity/JsonMeshImport/obj
+/Unity/JsonMeshImport/Packages
+/Unity/JsonMeshImport/ProjectSettings
+/Unity/JsonMeshImport/Assets/Standard Assets
+/Unity/JsonMeshImport/Assets/StreamingAssets
+GoogleService-Info.plist
+bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json
