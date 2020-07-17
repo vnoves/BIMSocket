@@ -142,9 +142,9 @@ namespace BIMSocket
 
         private void documentChangedEventFillingListOfElements(object sender, DocumentChangedEventArgs e)
         {
+            //Null if the window is not open
             if (MainForm._changedElements == null)
             { return; }
-            
 
             ElementClassFilter FamilyInstanceFilter = new ElementClassFilter(typeof(View), true);
             var addedElements = e.GetAddedElementIds(FamilyInstanceFilter);
@@ -165,7 +165,7 @@ namespace BIMSocket
             {
                 if (!MainForm._changedElements.Contains(item))
                 {
-                    MainForm._changedElements.Add(item);
+                    MainForm.AddChangedItem(item);
                 }
                 
             }

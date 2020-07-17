@@ -15,12 +15,16 @@ namespace BIMSocket
             MainCommand._doc = app.ActiveUIDocument.Document;
 
             var changes = RevitManagement.ProcessLocalChanges();
-
-            FireBaseConnection.SendChangesToDB(changes, null);
-
             RevitManagement.changedElements = new List<ElementId>();
 
-            MainForm._changedElements.Clear();
+            MainForm.ClearChangedItems();
+            if (changes == null)
+            {
+                return;
+            }
+            FireBaseConnection.SendChangesToDB(changes, null);
+
+  
         }
 
         public string GetName()
@@ -56,7 +60,7 @@ namespace BIMSocket
                 RevitManagement.ApplyGeometryChanges(MainCommand._doc);
 
                 tx.Commit();
-                MainForm._receivedElements.Clear();
+                MainForm.ClearReceivedItems();
             }
         }
 

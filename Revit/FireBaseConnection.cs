@@ -159,6 +159,7 @@ namespace BIMSocket
                         Console.WriteLine("Document data for {0} document:", snapshot.Id);
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
+                        RootObject = new Rootobject();
                         RootObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Rootobject>(st);
                         RevitManagement.ProcessRemoteChanges(RootObject);
                         

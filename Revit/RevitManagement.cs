@@ -86,7 +86,7 @@ namespace BIMSocket
 
 
             }
-            
+            geometryChanges.Clear();
         }
 
         private static Rootobject FormatChanges(string jsonString)
@@ -228,9 +228,11 @@ namespace BIMSocket
                 if (element!= null)
                 {
                     geometryChanges[element.Id] = item;
+
                     if (!MainForm._receivedElements.Contains(element.Id))
                     {
-                        MainForm._receivedElements.Add(element.Id);
+
+                        MainForm.AddReceivedItem(element.Id);
                     }
                     
                 }

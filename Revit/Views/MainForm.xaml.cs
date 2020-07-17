@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,33 +33,14 @@ namespace BIMSocket
         public UIApplication uiApp;
 
 
-        private readonly object _changedElementsLock = new object();
+        private static object _changedElementsLock = new object();
+
         internal static ObservableCollection<ElementId> _changedElements;
 
-        public ObservableCollection<ElementId> ChangedElementsCollection
-        {
-            get { return _changedElements; }
-            set
-            {
-                _changedElements = value;
+        private static object _receviedElementslock = new object();
 
-                BindingOperations.EnableCollectionSynchronization(_changedElements, _changedElementsLock);
-            }
-        }
-
-
-        private readonly object _receviedElementslock = new object();
         internal static ObservableCollection<ElementId> _receivedElements;
 
-        public ObservableCollection<ElementId> ReceivedElementsCollection
-        {
-            get { return _receivedElements; }
-            set
-            {
-                _receivedElements = value;
-                BindingOperations.EnableCollectionSynchronization(_receivedElements, _receviedElementslock);
-            }
-        }
 
 
         /// <summary>
@@ -70,32 +52,75 @@ namespace BIMSocket
             this.DataContext = this;
             this.p_commanddata = cmddata_p;
 
-            cleanVariables();
-
             InitializeComponent();
+
+            _changedElements = new ObservableCollection<ElementId>();
+            BindingOperations.EnableCollectionSynchronization(_changedElements, _changedElementsLock);
+            _receivedElements = new ObservableCollection<ElementId>();
+            BindingOperations.EnableCollectionSynchronization(_receivedElements, _receviedElementslock);
+
+            cleanVariables();
 
             this._doc = cmddata_p.Application.ActiveUIDocument.Document;
             bool connected = ConnectToDB();
             FireBaseConnection.ReceiveChangesFromDB();
             this.Closed += ClosingWindow;
-            this.SendChangesList.ItemsSource = ChangedElementsCollection;
-            this.ReceiveChangesList.ItemsSource = ReceivedElementsCollection;
+            this.SendChangesList.ItemsSource = _changedElements;
+            this.ReceiveChangesList.ItemsSource = _receivedElements;
         }
 
         private void cleanVariables()
         {
-            ChangedElementsCollection.Clear();
+
+            _changedElements.Clear();
 
             RevitManagement.changedElements = new List<ElementId>();
 
+            _receivedElements.Clear();
 
-            ReceivedElementsCollection.Clear();
             RevitManagement.geometryChanges = new Dictionary<ElementId, Child>();
 
         }
+
         private void ClosingWindow(object sender, EventArgs e)
         {
             cleanVariables();
+        }
+
+
+        public static void AddChangedItem(ElementId elementId)
+        {
+            lock (_changedElementsLock)
+            {
+                _changedElements.Add(elementId);
+            }
+
+        }
+
+        public static void ClearChangedItems()
+        {
+            lock (_changedElementsLock)
+            {
+                _changedElements.Clear();
+            }
+
+        }
+
+        public static void AddReceivedItem(ElementId elementId)
+        {
+            lock (_receviedElementslock)
+            {
+                _receivedElements.Add(elementId);
+            }
+
+        }
+        public static void ClearReceivedItems()
+        {
+            lock (_receviedElementslock)
+            {
+                _receivedElements.Clear();
+            }
+
         }
 
         private bool ConnectToDB()
@@ -136,5 +161,6 @@ namespace BIMSocket
         {
             App.ExportModelExternalEvent.Raise();
         }
+
     }
 }
