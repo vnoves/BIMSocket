@@ -34,6 +34,13 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 
 ## Getting Started
 
+Clone this repo
+
+``` git clone https://github.com/vnoves/BIMSocket.git```
+
+Load submodules
+
+``` git pull --recurse-submodules ```
 
 
 ## Prerequisites
