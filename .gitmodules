@@ -1,3 +1,6 @@
 [submodule "Revit/RvtVa3c"]
 	path = Revit/RvtVa3c
 	url = https://github.com/pabloderen/RvtVa3c.git
+[submodule "BIMSOCKetViewer"]
+	path = BIMSOCKetViewer
+	url = https://github.com/vnoves/BIMSOCKetViewer.git
