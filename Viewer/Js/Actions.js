@@ -12,7 +12,7 @@
             modelObj.children.splice(indexObj, 1);
         }
         model = modelObj.toJSON();
-        db.collection('models').doc('FBK_01').update(model);
+        db.collection('models').doc(modelName).update(model);
 
         var selectedObject = scene.getObjectByName(object.name);
         selectedObject.parent.remove( selectedObject );

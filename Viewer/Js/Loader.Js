@@ -4,7 +4,7 @@ function loadModel() {
     var loader = new THREE.ObjectLoader();
 
     // Get model from firebase for the first time
-    db.collection('models').doc('FBK_01').get().then(function(doc) {
+    db.collection('models').doc(modelName).get().then(function(doc) {
         if (doc.exists) {
             model = doc.data();
             loader.parse(model,
@@ -39,7 +39,7 @@ function loadModel() {
     });
 
     // Subscribe on update changes for model on firebase
-    db.collection('models').doc(`FBK_01`).onSnapshot((modelChanges) => {
+    db.collection('models').doc(modelName).onSnapshot((modelChanges) => {
         model = modelChanges.data();
         loader.parse(model,
             function (mod) {

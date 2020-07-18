@@ -32,8 +32,9 @@
         }
         else{
             objectSel.material = oringinMaterial;
-            db.collection('models').doc('test1').update(model);
+            db.collection('models').doc(modelName).update(model);
             DesactivateToggleMove();
+            
         }
     }
 
