@@ -9,9 +9,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Markup;
@@ -30,8 +32,14 @@ namespace BIMSocket
 
         public UIApplication uiApp;
 
-        internal static ObservableCollection<ElementId> changedElements;
 
+        private static object _changedElementsLock = new object();
+
+        internal static ObservableCollection<ElementId> _changedElements;
+
+        private static object _receviedElementslock = new object();
+
+        internal static ObservableCollection<ElementId> _receivedElements;
 
 
 
@@ -43,24 +51,82 @@ namespace BIMSocket
         {
             this.DataContext = this;
             this.p_commanddata = cmddata_p;
-            RevitManagement.changedElements = new List<ElementId>();
-            changedElements = new ObservableCollection<ElementId>();
+
             InitializeComponent();
+
+            _changedElements = new ObservableCollection<ElementId>();
+            BindingOperations.EnableCollectionSynchronization(_changedElements, _changedElementsLock);
+            _receivedElements = new ObservableCollection<ElementId>();
+            BindingOperations.EnableCollectionSynchronization(_receivedElements, _receviedElementslock);
+
+            cleanVariables();
+
+            this._doc = cmddata_p.Application.ActiveUIDocument.Document;
             bool connected = ConnectToDB();
+            FireBaseConnection.ReceiveChangesFromDB();
             this.Closed += ClosingWindow;
-            this.ChangesList.ItemsSource = changedElements;
+            this.SendChangesList.ItemsSource = _changedElements;
+            this.ReceiveChangesList.ItemsSource = _receivedElements;
+        }
+
+        private void cleanVariables()
+        {
+
+            _changedElements.Clear();
+
+            RevitManagement.changedElements = new List<ElementId>();
+
+            _receivedElements.Clear();
+
+            RevitManagement.geometryChanges = new Dictionary<ElementId, Child>();
+
         }
 
         private void ClosingWindow(object sender, EventArgs e)
         {
-            RevitManagement.changedElements = new List<ElementId>();
-            changedElements = new ObservableCollection<ElementId>();
+            cleanVariables();
+        }
+
+
+        public static void AddChangedItem(ElementId elementId)
+        {
+            lock (_changedElementsLock)
+            {
+                _changedElements.Add(elementId);
+            }
+
+        }
+
+        public static void ClearChangedItems()
+        {
+            lock (_changedElementsLock)
+            {
+                _changedElements.Clear();
+            }
+
+        }
+
+        public static void AddReceivedItem(ElementId elementId)
+        {
+            lock (_receviedElementslock)
+            {
+                _receivedElements.Add(elementId);
+            }
+
+        }
+        public static void ClearReceivedItems()
+        {
+            lock (_receviedElementslock)
+            {
+                _receivedElements.Clear();
+            }
+
         }
 
         private bool ConnectToDB()
         {
-            
-            return FireBaseConnection.Connect();
+
+            return FireBaseConnection.Connect("models", this._doc.Title);
         }
 
         public string projectName = App.NameSpaceNm;
@@ -78,25 +144,23 @@ namespace BIMSocket
 
         private void Mainbutton_Click(object sender, RoutedEventArgs e)
         {
-            App.exEvent.Raise();
+            if (this.SendChangesList.Items.Count >= 0)
+            {
+                App.ExportChangesExternalEvent.Raise();
+            }
 
+            if (this.ReceiveChangesList.Items.Count >= 0)
+            {
+                App.ReceiveChangesExternalEvent.Raise();
+                
+            }
 
-
-        }
-
-        public static void AddItem(ElementId elementId)
-        {
-            changedElements.Add(elementId);
-        }
-
-        public static void RemoveItem(ElementId elementId)
-        {
-            changedElements.Remove(elementId);
         }
 
         private void SendModel_Click(object sender, RoutedEventArgs e)
         {
-            App.exEventB.Raise();
+            App.ExportModelExternalEvent.Raise();
         }
+
     }
 }

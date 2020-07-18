@@ -18,9 +18,9 @@ namespace BIMSocket
 
         static Type myType = typeof(App);
         static string nameSpaceNm = myType.Namespace;
-        internal static ExternalEvent exEvent;
-        internal static ExternalEvent exEventB;
-
+        internal static ExternalEvent ExportChangesExternalEvent;
+        internal static ExternalEvent ExportModelExternalEvent;
+        internal static ExternalEvent ReceiveChangesExternalEvent;
         public static string NameSpaceNm
 
         {
@@ -30,6 +30,8 @@ namespace BIMSocket
             set { nameSpaceNm = value; }
 
         }
+
+        
 
         public Result OnStartup(UIControlledApplication application)
         {
@@ -98,13 +100,20 @@ namespace BIMSocket
             ExportEvent handler = new ExportEvent();
 
             // External Event for the dialog to use (to post requests)
-            exEvent = ExternalEvent.Create(handler);
+            ExportChangesExternalEvent = ExternalEvent.Create(handler);
 
             // A new handler to handle request posting by the dialog
             ExportModelEvent handlerB = new ExportModelEvent();
 
             // External Event for the dialog to use (to post requests)
-            exEventB = ExternalEvent.Create(handlerB);
+            ExportModelExternalEvent = ExternalEvent.Create(handlerB);
+
+
+            // A new handler to handle request posting by the dialog
+            ReceiveChangesEvent handlerC = new ReceiveChangesEvent();
+
+            // External Event for the dialog to use (to post requests)
+            ReceiveChangesExternalEvent = ExternalEvent.Create(handlerC);
 
             return Result.Succeeded;
 
@@ -133,11 +142,11 @@ namespace BIMSocket
 
         private void documentChangedEventFillingListOfElements(object sender, DocumentChangedEventArgs e)
         {
-            if (MainForm.changedElements == null)
+            //Null if the window is not open
+            if (MainForm._changedElements == null)
             { return; }
-            
 
-            ElementClassFilter FamilyInstanceFilter = new ElementClassFilter(typeof(FamilyInstance));
+            ElementClassFilter FamilyInstanceFilter = new ElementClassFilter(typeof(View), true);
             var addedElements = e.GetAddedElementIds(FamilyInstanceFilter);
             var deletedElements = e.GetDeletedElementIds();
             var modifiedElements = e.GetModifiedElementIds(FamilyInstanceFilter);
@@ -154,9 +163,9 @@ namespace BIMSocket
 
             foreach (var item in RevitManagement.changedElements)
             {
-                if (!MainForm.changedElements.Contains(item))
+                if (!MainForm._changedElements.Contains(item))
                 {
-                    MainForm.AddItem(item);
+                    MainForm.AddChangedItem(item);
                 }
                 
             }

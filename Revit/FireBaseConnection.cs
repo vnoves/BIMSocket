@@ -22,16 +22,18 @@ namespace BIMSocket
     internal class FireBaseConnection
     {
 
-        static string  CollectionName = "models";
-        static string  DocumentName = MainCommand._doc.Title;
+        static string  CollectionName { get; set; }
+        static string DocumentName { get; set; }
 
         private static FirestoreDb firestoreDb;
 
-        internal static bool Connect()
+        internal static bool Connect(string Collection, string Document)
         {
+            CollectionName = Collection;
+            DocumentName = Document;
             try
             {
-                string path = @"C:\Users\vnoves\Desktop\bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json";
+                string path = @"C:\Users\pderendinger\Downloads\bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json";
                 FirestoreClientBuilder builder = new FirestoreClientBuilder();
                 builder.CredentialsPath = path;
                 var client = builder.Build();
@@ -142,12 +144,12 @@ namespace BIMSocket
             return RootObject;
         }
 
-        private static async void ReceiveChangesFromDB()
+        public static void ReceiveChangesFromDB()
         {
             Rootobject RootObject = new Rootobject();
             try
             {
-                DocumentReference docRef = firestoreDb.Collection("models").Document("test1");
+                DocumentReference docRef = firestoreDb.Collection(CollectionName).Document(DocumentName);
                 FirestoreChangeListener listener = docRef.Listen(snapshot =>
                 {
                     Console.WriteLine("Callback received document snapshot.");
@@ -157,7 +159,10 @@ namespace BIMSocket
                         Console.WriteLine("Document data for {0} document:", snapshot.Id);
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
+                        RootObject = new Rootobject();
                         RootObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Rootobject>(st);
+                        RevitManagement.ProcessRemoteChanges(RootObject);
+                        
                         //TODO check this to detect changes
                     }
                 });

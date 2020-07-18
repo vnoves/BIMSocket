@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIMSocket", "BIMSocket.csproj", "{F310C124-EEE8-4740-95F9-E444F5083ED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RvtVa3c", "..\RvtVa3c\RvtVa3c\RvtVa3c.csproj", "{3F865D22-8849-4DFA-9E7C-3533A8A159EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RvtVa3c", "RvtVa3c\RvtVa3c\RvtVa3c.csproj", "{3F865D22-8849-4DFA-9E7C-3533A8A159EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

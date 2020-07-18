@@ -1,0 +1,3 @@
+[submodule "Revit/RvtVa3c"]
+	path = Revit/RvtVa3c
+	url = https://github.com/pabloderen/RvtVa3c.git

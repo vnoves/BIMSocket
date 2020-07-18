@@ -10,7 +10,7 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
 
 
-## How it works ##
+## What is BIMSOCKet for? ##
 
 <img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/Connections-01.png' width='150' alt='Conections logo' />
 
@@ -39,13 +39,21 @@ BIMSocket is an open-source project. You can make suggestions or track and submi
 ## Prerequisites
 
 ## Versions
-[Revit: 2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)<br/>
+Json:
+[V3](https://github.com/json-schema-org/json-schema-spec)
 
-[Threejs: 103](https://github.com/mrdoob/three.js/releases/tag/r103)<br/>
+Unity:
+[2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)<br/>
 
-[Unity: 2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)<br/>
+Revit:
+[2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)<br/>
 
-[Rhino 6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
+Three.js:
+[103](https://github.com/mrdoob/three.js/releases/tag/r103)<br/>
+
+Rhino:
+[6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
+
 
 ## References
 Json:

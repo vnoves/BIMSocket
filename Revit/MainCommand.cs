@@ -16,10 +16,12 @@ namespace BIMSocket
         internal static Document _doc;
         internal static View3D view3DToExport;
 
+        public static MainForm mainForm { get; private set; }
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
 
-            MainForm mainForm = new MainForm(commandData);
+            mainForm = new MainForm(commandData);
             Process process = Process.GetCurrentProcess();
 
             _doc = commandData.Application.ActiveUIDocument.Document;
