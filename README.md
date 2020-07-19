@@ -42,6 +42,10 @@ Load submodules
 
 ``` git pull --recurse-submodules ```
 
+Refresh submodules
+``` git submodule update --init --recursive ```
+
+``` git submodule update --recursive --remote ```
 
 ## Prerequisites
 
