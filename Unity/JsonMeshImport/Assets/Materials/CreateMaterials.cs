@@ -22,7 +22,7 @@ namespace Assets.Materials
         private static void CreateSingleMat(Material mat)
         {
             string strRes = mat.uuid.Replace("/", "");
-            UnityEngine.Color color = GetColour(mat.color);
+            UnityEngine.Color color = GetColour(mat);
             // Create a simple material asset
             var material = new UnityEngine.Material(Shader.Find("Standard"));
             material.SetColor("_Color", color);
@@ -32,20 +32,26 @@ namespace Assets.Materials
             {
                 AssetDatabase.CreateAsset(material, path);
             }
-            else { }
+            else {
+                myType.SetColor("_Color", color);
+            }
         }
 
-        private static UnityEngine.Color GetColour(int intRGB)
+        private static UnityEngine.Color GetColour(Material mat)
         {
-            System.Drawing.Color color =
-                System.Drawing.Color.FromArgb((intRGB >> 16) & 0xff, 
-                (intRGB >> 8) & 0xff, (intRGB >> 0) & 0xff);
+            Vector3 colorRGB = IntToRgb(mat.color);
+            var opacityInt = mat.opacity;
+                UnityEngine.Color colorUnity =
+                    new UnityEngine.Color(colorRGB.x / 255, colorRGB.y / 255, colorRGB.z / 255, opacityInt);
+                return colorUnity;       
+        }
 
-
-            UnityEngine.Color colorUnity =
-                new UnityEngine.Color(color.R, color.G, color.B);
-
-            return colorUnity;
+        public static Vector3 IntToRgb(int value)
+        {
+            var red = (value >> 16) & 255;
+            var green = (value >> 8) & 255;
+            var blue = (value >> 0) & 255;
+            return new Vector3(red, green, blue);
         }
     }
 }

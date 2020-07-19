@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "617196332696",
+    "firebase_url": "https://bimsocket-db.firebaseio.com",
+    "project_id": "bimsocket-db",
+    "storage_bucket": "bimsocket-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617196332696:android:c22ffb51435e76cc2e12ed",
+        "android_client_info": {
+          "package_name": "com.engworks.bimsocket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617196332696-v7afjqrbf4fjshrbh7rergjledkij7ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRW5GmKqwNxIKz5TjdUBH-FnrCcBNGXwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617196332696-v7afjqrbf4fjshrbh7rergjledkij7ol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "617196332696-4i42391vavlthi2ejttbpvd60lor9imh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.engworks.bimsocket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

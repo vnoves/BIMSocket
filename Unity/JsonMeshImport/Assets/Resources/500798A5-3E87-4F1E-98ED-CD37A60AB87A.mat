@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: e3e052f9-0156-11d5-9301-0000863f27ad-000001a7
+  m_Name: 500798A5-3E87-4F1E-98ED-CD37A60AB87A
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -73,5 +73,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.9764706, g: 0.9764706, b: 0.9764706, a: 1}
+    - _Color: {r: 0, g: 0.2, b: 0.8, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
