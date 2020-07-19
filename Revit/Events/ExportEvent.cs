@@ -54,11 +54,12 @@ namespace BIMSocket
         public void Execute(UIApplication app)
         {
             MainCommand._doc = app.ActiveUIDocument.Document;
+            MainCommand._uidoc = app.ActiveUIDocument;
             using (Transaction tx = new Transaction(MainCommand._doc,"Updating Model"))
             {
                 tx.Start();
                 RevitManagement.ApplyGeometryChanges(MainCommand._doc);
-
+                RevitManagement.ApplyMaterialChanges(MainCommand._doc);
                 tx.Commit();
                 MainForm.ClearReceivedItems();
             }

@@ -15,6 +15,7 @@ namespace BIMSocket
 
         internal static Document _doc;
         internal static View3D view3DToExport;
+        internal static UIDocument _uidoc;
 
         public static MainForm mainForm { get; private set; }
 
