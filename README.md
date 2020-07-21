@@ -77,24 +77,6 @@ Rhino:
 [6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
 
 
-## References
-Json:
-https://github.com/va3c/RvtVa3c
-
-Unity:
-https://firebase.google.com/docs/unity/setup
-
-Revit:
-https://github.com/jeremytammik/DirectObjLoader
-
-Three.js:
-https://threejs.org/
-https://threejs.org/docs/#api/en/loaders/ObjectLoader
-
-Unity:
-https://github.com/SaladLab/Json.Net.Unity3D
-https://github.com/Mcklem/JSONGameObject
-
 ## Authors
 * [ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
 * [**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
