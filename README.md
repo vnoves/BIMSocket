@@ -9,6 +9,12 @@
 This project has been developed in July 2020 during the AEC Tech Hackathon.You can find the presentation of the idea
 [Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
 
+*BIMSOCKet Main Goal*
+=====================================================
+
+BIMSOCKet main goal is not only to communicate programs but to enhance the way we work in our industry. Our ultimate goal is create processes and workflows between all the different programs and make them work as whole.
+
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/PartsRobot.jpg' width='250' alt='Conections logo' />
 
 ## What is BIMSOCKet for? ##
 
