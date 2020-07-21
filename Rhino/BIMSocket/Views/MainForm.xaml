@@ -1,0 +1,67 @@
+﻿<Window x:Class="BIMSocket.MainForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Name="MainWindow"
+        Height="490" Width="240" 
+        MinHeight="480" MinWidth="240" 
+        MaxHeight="480" MaxWidth="240" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" Title="{Binding Path=ProjectName}"
+        Style="{DynamicResource CustomWindowStyle}" 
+        WindowStyle="None" Topmost="True" >
+
+    <Border Style="{DynamicResource MainBorderTemplate}" 
+            Margin="15,10,10,0" 
+            MouseDown="Border_MouseDown">
+
+        <Grid Margin="9" 
+              Background="Transparent">
+
+            <!--Title Bar elements-->
+            <Button Style="{DynamicResource TitleButtonStyle}" 
+                    Name="TtitleButton" 
+                    Margin="11,5,0,405" 
+                    HorizontalAlignment="Left"
+                    >BIMSocket</Button>
+            <Button Style="{DynamicResource CloseButtonStyle}" 
+                    Name="CloseButton" 
+                    Margin="164,11,0,404" 
+                    HorizontalAlignment="Left"
+                    >X</Button>
+            <Label Style="{DynamicResource VersionLabel}" 
+                    Margin="15,27,0,395" 
+                    HorizontalAlignment="Left"/>
+
+            <!--Main Form elements-->
+            <Button Name="Send_Button" 
+                    Style="{DynamicResource MainButtonStyle}"  
+                    Margin="8,400,0,6"
+                    HorizontalAlignment="Left" Content="SEND"  Click="Send_Button_Click"/>
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,301,0,0" VerticalAlignment="Top" Width="182" x:Name="SendChangesList" ItemsSource="{Binding changedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,128,0,0" VerticalAlignment="Top" Width="183" x:Name="ReceiveChangesList" ItemsSource="{Binding receivedElements}" />
+            <Label Style="{DynamicResource VersionLabel}" 
+                Margin="44,281,0,141" 
+                HorizontalAlignment="Left" Content="OUTGOING" HorizontalContentAlignment="Left" Width="112"/>
+            <Label Style="{DynamicResource VersionLabel}" 
+                Margin="44,107,0,315" 
+                HorizontalAlignment="Left" Content="INCOMING" HorizontalContentAlignment="Left" Width="112"/>
+            <Button x:Name="SendModel" 
+                Style="{DynamicResource MainButtonStyle}"  
+                Margin="8,54,0,352"
+                HorizontalAlignment="Left" Content="Send Model"  Click="SendModel_Click"/>
+            <Button x:Name="Receive_Button" 
+                Style="{DynamicResource MainButtonStyle}"  
+                Margin="10,225,0,181"
+                HorizontalAlignment="Left" Content="RECEIVE"  Click="Receive_Button_Click"/>
+        </Grid>
+    </Border>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+</Window>

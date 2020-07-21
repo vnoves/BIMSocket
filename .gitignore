@@ -16,3 +16,7 @@
 /Unity/JsonMeshImport/Assets/StreamingAssets
 GoogleService-Info.plist
 bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json
+packages/
+bin/
+obj/
+

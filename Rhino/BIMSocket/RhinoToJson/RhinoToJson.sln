@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RhinoToJson", "RhinoToJson\RhinoToJson.csproj", "{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Debug32|Any CPU = Debug32|Any CPU
+		Debug32|x86 = Debug32|x86
+		Debug64|Any CPU = Debug64|Any CPU
+		Debug64|x86 = Debug64|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug|Any CPU.ActiveCfg = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug|Any CPU.Build.0 = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug|x86.ActiveCfg = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug|x86.Build.0 = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug32|Any CPU.ActiveCfg = Debug32|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug32|Any CPU.Build.0 = Debug32|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug32|x86.ActiveCfg = Debug32|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug32|x86.Build.0 = Debug32|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug64|Any CPU.ActiveCfg = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug64|Any CPU.Build.0 = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug64|x86.ActiveCfg = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Debug64|x86.Build.0 = Debug64|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6C7A91B-8ACE-407D-BC71-0F4E4BCB3CFE}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
