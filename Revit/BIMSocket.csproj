@@ -154,11 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="ExportEvent.cs" />
-    <Compile Include="FireBaseConnection.cs" />
+    <Compile Include="Events\ExportEvent.cs" />
+    <Compile Include="Firebase\FireBaseConnection.cs" />
     <Compile Include="MainCommand.cs" />
     <Compile Include="Models\Rootobject.cs" />
-    <Compile Include="RevitManagement.cs" />
+    <Compile Include="Utils\RevitManagement.cs" />
+    <Compile Include="Utils\LocalFiles.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Views\MainForm.xaml.cs">
       <DependentUpon>MainForm.xaml</DependentUpon>

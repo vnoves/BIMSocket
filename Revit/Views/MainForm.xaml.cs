@@ -142,25 +142,31 @@ namespace BIMSocket
             this.DragMove();
         }
 
-        private void Mainbutton_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.SendChangesList.Items.Count >= 0)
-            {
-                App.ExportChangesExternalEvent.Raise();
-            }
 
-            if (this.ReceiveChangesList.Items.Count >= 0)
-            {
-                App.ReceiveChangesExternalEvent.Raise();
-                
-            }
-
-        }
 
         private void SendModel_Click(object sender, RoutedEventArgs e)
         {
             App.ExportModelExternalEvent.Raise();
         }
 
+
+
+        private void Receive_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ReceiveChangesList.Items.Count >= 0)
+            {
+                App.ReceiveChangesExternalEvent.Raise();
+
+            }
+        }
+
+
+        private void Send_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.SendChangesList.Items.Count >= 0)
+            {
+                App.ExportChangesExternalEvent.Raise();
+            }
+        }
     }
 }

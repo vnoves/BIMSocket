@@ -13,6 +13,7 @@ namespace BIMSocket
         internal static List<ElementId> changedElements;
         internal static List<ElementId> deletedElements;
         internal static Dictionary<ElementId, Child> geometryChanges;
+        private static Dictionary<ElementId, Material> materialChanges;
 
         public static Rootobject CurrentRootObject { get; internal set; }
 
@@ -57,16 +58,34 @@ namespace BIMSocket
         {
 
             var document = MainCommand.GetCurrentDocument();
-            string jsonPath = ExportToJson(document);
+            ExportToJson();
 
             var jsonString = "";
-            using (StreamReader streamReader = new StreamReader(jsonPath))
+            using (StreamReader streamReader = new StreamReader(Utils.LocalFiles.getJson3DPath()))
             {
                 jsonString = streamReader.ReadToEnd();
             }
 
             return FormatChanges(jsonString);
 
+        }
+
+        internal static void ApplyMaterialChanges(Document doc)
+        {
+            foreach (KeyValuePair<ElementId, Material> change in materialChanges)
+            {
+                var element = doc.GetElement(change.Key) as Autodesk.Revit.DB.Material;
+                int value = change.Value.color;
+                var blue = Convert.ToByte((value >> 0) & 255);
+                var green = Convert.ToByte((value >> 8) & 255);
+                var red = Convert.ToByte((value >> 16) & 255);
+
+ 
+                element.Color = new Color(red,green, blue);
+
+            }
+            materialChanges.Clear();
+            MainCommand._uidoc.RefreshActiveView();
         }
 
         internal static void ApplyGeometryChanges(Document doc)
@@ -76,13 +95,14 @@ namespace BIMSocket
                 var element = doc.GetElement(change.Key);
                 var matrix = change.Value.matrix;
                 Transform transform = Transform.Identity;
-                transform.BasisX = new XYZ(matrix[0], matrix[1], matrix[2]);
-                transform.BasisY = new XYZ(matrix[3], matrix[4], matrix[5]);
-                transform.BasisZ = new XYZ(matrix[6], matrix[7], matrix[8]);
+                var feet = 0.00328084;
+                var movement= new XYZ( - matrix[12]* feet,  matrix[14]* feet, matrix[13]* feet);
+                //transform.BasisY = new XYZ(matrix[3], matrix[4], matrix[5]);
+                //transform.BasisZ = new XYZ(matrix[6], matrix[7], matrix[8]);
                 
-                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisX);
-                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisY);
-                ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisZ);
+                ElementTransformUtils.MoveElement(doc, change.Key, movement);
+                //ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisY);
+                //ElementTransformUtils.MoveElement(doc, change.Key, transform.BasisZ);
 
 
             }
@@ -103,25 +123,14 @@ namespace BIMSocket
             }
         }
 
-        private static string ExportToJson()
+        private static void ExportToJson()
         {
             RvtVa3c.Command command = new RvtVa3c.Command();
             View3D view3D = MainCommand.GetExportView3D();
-            var jsonPath = Path.GetTempPath() + "BIMSocket.json";
-
+            var jsonPath = Utils.LocalFiles.getJson3DPath();
             command.ExportView3D(view3D, jsonPath);
-            return jsonPath;
         }
 
-        private static string ExportToJson(Document documents)
-        {
-            RvtVa3c.Command command = new RvtVa3c.Command();
-            View3D view3D = MainCommand.GetExportView3D();
-            var jsonPath = Path.GetTempPath() + "BIMSocket.json";
-
-            command.ExportView3D(view3D, jsonPath);
-            return jsonPath;
-        }
 
         private static bool IsolateElementsIn3DView(ICollection<ElementId> elementsList)
         {
@@ -213,13 +222,18 @@ namespace BIMSocket
             var currentObjectsUuid = currentRootObject._object.children.Select(x => x.uuid);
             var newObjects = newRootObject._object.children.Where(x => !currentObjectsUuid.Contains(x.uuid)).ToList();
             var existingObjects = newRootObject._object.children.Where(x => currentObjectsUuid.Contains(x.uuid)).ToList();
+            
             var modifiedGeometry = GetModifiedGeometry(existingObjects, currentRootObject);
+            var modifiedMaterials = GetModifiedMaterials(newRootObject.materials, currentRootObject);
 
-            SaveReceivedChanges(modifiedGeometry);
+            SaveReceivedGeometryChanges(modifiedGeometry);
+            SaveReceivedMaterialChanges(modifiedMaterials, existingObjects);
             //TODO how to determ changes in geometry
         }
 
-        private static void SaveReceivedChanges(List<Child> modifiedGeometry)
+       
+
+        private static void SaveReceivedGeometryChanges(List<Child> modifiedGeometry)
         {
             geometryChanges = new Dictionary<ElementId, Child>();
             foreach (var item in modifiedGeometry)
@@ -240,12 +254,62 @@ namespace BIMSocket
             
         }
 
+        private static void SaveReceivedMaterialChanges(List<Material> modifiedMaterial, List<Child> existingObjects)
+        {
+            materialChanges = new Dictionary<ElementId, Material>();
+            //var materials = new FilteredElementCollector(MainCommand._doc)
+            //    .OfClass(typeof(Autodesk.Revit.DB.Material))
+            //    .ToElements();
+
+
+            foreach (var item in modifiedMaterial)
+            {
+
+                var objectWithModifiedMaterial = existingObjects.Select(x => x.children.Where(c => c.material == item.uuid).FirstOrDefault()).FirstOrDefault();
+
+                if (objectWithModifiedMaterial != null)
+                {
+                    Element element = MainCommand._doc.GetElement(objectWithModifiedMaterial.material);
+
+
+                    materialChanges[element.Id] = item;
+
+                    if (!MainForm._receivedElements.Contains(element.Id))
+                    {
+
+                        MainForm.AddReceivedItem(element.Id);
+                    }
+                 
+                    
+
+                }
+            }
+
+        }
+
+
         private static List<Child> GetModifiedGeometry(List<Child> existingObjects, Rootobject currentRootObject)
         {
             var identity = new float[] {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 
             var geometryChanged = existingObjects.Where(x => !x.matrix.SequenceEqual(identity)).ToList();
             return geometryChanged;
+
+        }
+
+        private static List<Material> GetModifiedMaterials(List<Material> materials, Rootobject currentRootObject)
+        {
+            var updatedMaterials = new List<Material>();
+            foreach (var material in materials)
+            {
+                var changedColor = currentRootObject.materials.Where(x => x.uuid == material.uuid)
+                    .Where(y => y.color != material.color).FirstOrDefault();
+                if (changedColor != null)
+                {
+                    updatedMaterials.Add(material);
+                }
+            }
+            return updatedMaterials;
 
         }
     }

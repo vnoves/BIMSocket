@@ -33,7 +33,7 @@ namespace BIMSocket
             DocumentName = Document;
             try
             {
-                string path = @"C:\Users\pderendinger\Downloads\bimsocket-db-firebase-adminsdk-dy6gn-a397d4402d.json";
+                string path = Utils.LocalFiles.getCredentialsPath();
                 FirestoreClientBuilder builder = new FirestoreClientBuilder();
                 builder.CredentialsPath = path;
                 var client = builder.Build();
@@ -69,15 +69,22 @@ namespace BIMSocket
 
                 var objectsOnly = LocalModifications._object.children.Where(x => !x.name.Contains("Camera")).ToList();
 
-                UpdateRootObject(ServerChildren, objectsOnly);
+
+                UpdateRootObject(ServerChildren, LocalModifications._object.children);
 
                 //Update geometry
                 UpdateRootObject(ServerGeometry, LocalModifications.geometries);
 
                 UpdateRootObject(ServerMaterials, LocalModifications.materials);
-                var jsonObject = Newtonsoft.Json.JsonConvert.SerializeObject(ServerModel);
-                await firestoreDb.Collection(CollectionName).Document(DocumentName).SetAsync(ServerModel);
+                FillEmptyChildren(ServerModel);
+                
+                var change =new Dictionary<FieldPath, object>();
+                change[new FieldPath(new string[] { "object","children" })] = ServerModel._object.children;
+                change[new FieldPath(new string[] { "geometries" })] = ServerModel.geometries;
+                await firestoreDb.Collection(CollectionName).Document(DocumentName).UpdateAsync(change);
 
+                
+                
             }
             catch (Exception ex)
             {
@@ -86,6 +93,30 @@ namespace BIMSocket
             }
         }
 
+        private static void FillEmptyChildren(Rootobject serverModel)
+        {
+            foreach (var item in serverModel._object.children)
+            {
+                if (item.children == null)
+                {
+                    item.children = new Children[] { };
+                }
+            }
+
+            foreach (Geometry item in serverModel.geometries)
+            {
+                if (item.data.uvs == null)
+                {
+                    item.data.uvs = new List<object>();
+                }
+                item.data.visible = true;
+                item.data.scale = 1;
+                item.data.castShadow = true;
+                item.data.doubleSided = true;
+                item.data.receiveShadow = true;
+       
+            }
+        }
 
         private static void UpdateRootObject<T>(List<T> RootChildren, List<T> obj)
         {
@@ -100,7 +131,7 @@ namespace BIMSocket
                     RootChildren[i] = existingObjectToUpdate;
                     obj.Remove(existingObjectToUpdate);
                 }
-                
+
             }
             if (obj.Any())
             {
@@ -159,8 +190,7 @@ namespace BIMSocket
                         Console.WriteLine("Document data for {0} document:", snapshot.Id);
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
-                        RootObject = new Rootobject();
-                        RootObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Rootobject>(st);
+                        RootObject = snapshot.ConvertTo<Rootobject>();
                         RevitManagement.ProcessRemoteChanges(RootObject);
                         
                         //TODO check this to detect changes

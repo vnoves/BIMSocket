@@ -283,7 +283,7 @@
     <!--MainButtons Custom template-->
     <ControlTemplate  x:Key="MainButtonStyleTemplate" TargetType="Button">
         <Border x:Name="border" 
-                    CornerRadius="17" 
+                    CornerRadius="5" 
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}" 
                     Background="{TemplateBinding Background}" 

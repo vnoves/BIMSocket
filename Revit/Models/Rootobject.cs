@@ -73,8 +73,7 @@ namespace BIMSocket
         public Children[] children { get; set; }
         [FirestoreProperty]
         public Userdata userData { get; set; }
-        [FirestoreProperty]
-        public string material { get; set; }
+        
     }
     [FirestoreData]
     public class Userdata
