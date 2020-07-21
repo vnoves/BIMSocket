@@ -52,6 +52,7 @@ Refresh submodules
 
 ## Getting Started
 
+Visit the wiki [Getting started page](https://github.com/vnoves/BIMSocket/wiki/Getting-started)
 
 ## Versions
 Json:
