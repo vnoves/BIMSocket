@@ -42,9 +42,6 @@ BIMSOCKet allows you to create a [Firebase realtime database](https://firebase.g
 
 - **Easy plugin**. Create a project in BIMSOCKet is easy, just create a database, install your software node and then select the created database.
 
-
-
-
 ## Contribute ##
 
 BIMSocket is an open-source project. You can make suggestions or track and submit bugs via Github issues.  You can submit your own code to the BIMSocket project via a Github pull request.
