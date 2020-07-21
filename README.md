@@ -18,14 +18,19 @@ BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in 
 
 ## Features and design principles ##
 
-
-- **Network-agnostic**.
-
-- **Database-Storage**. 
-
-- **Automatic synchronization**. 
-
 - **Automatic synchronization**.  We're not yet making an effort to support old platforms, but we have tested BIMsocket in Node.js, Chrome, Firefox, Safari, MS Edge, and Electron
+
+- **Database Storage**. When you use BIMSOCKet everything is saved in a database, you any change you make while you are offline will be updated as soon as you connect again.
+
+- **Format Agnostic**. BIMSOCKet currently use Json as the exchange format but any other format like IFC, glTF, etc. can be use as well.
+
+- **Multi Model Capability**.You can create multiple Sockets and then upload all of them together so every modification will only affect the model origin.
+
+- **Useful API**. ith the BIMSOCKet API you can not only share information but also process it or modified before it reaches any program.
+
+- **Easy plugin**. Create a project in BIMSOCKet is easy, just create a database, install your software node and then select the created database.
+
+
 
 
 ## Contribute ##
