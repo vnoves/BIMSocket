@@ -66,23 +66,6 @@ Refresh submodules
 
 Visit the wiki [Getting started page](https://github.com/vnoves/BIMSocket/wiki/Getting-started)
 
-## Versions
-Json:
-[V3](https://github.com/json-schema-org/json-schema-spec)
-
-Unity:
-[2019.3.0a7 (64-bit)](https://store.unity.com/#plans-individual)<br/>
-
-Revit:
-[2020 20.0.0.377 20190327_2315(x64)](https://www.autodesk.com/education/free-software/revit)<br/>
-
-Three.js:
-[103](https://github.com/mrdoob/three.js/releases/tag/r103)<br/>
-
-Rhino:
-[6](https://www.rhino3d.com/download/rhino-for-windows/6/latest)<br/>
-
-
 ## Authors
 * [ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
 * [**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
