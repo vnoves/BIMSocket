@@ -16,6 +16,12 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 
 BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in the industry in real time. For the hackathon we will connect Revit, a Three JS viewer and Unity (maybe be Rhino as well) to our socket and show how it works.
 
+##How does it work under the hood?##
+
+BIMSOCKet allows you to create a [Firebase realtime database](https://firebase.google.com/) and then use addins on each software to connect to it in real time and save changes.
+
+<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/FirebaseConeection-01.png' width='250' alt='Conections logo' />
+
 ## Features and design principles ##
 
 - **Automatic synchronization**.  We're not yet making an effort to support old platforms, but we have tested BIMsocket in Node.js, Chrome, Firefox, Safari, MS Edge, and Electron
