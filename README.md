@@ -37,8 +37,6 @@ BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in 
 
 BIMSocket is an open-source project. You can make suggestions or track and submit bugs via Github issues.  You can submit your own code to the BIMSocket project via a Github pull request.
 
-## Getting Started
-
 Clone this repo
 
 ``` git clone https://github.com/vnoves/BIMSocket.git```
@@ -52,7 +50,8 @@ Refresh submodules
 
 ``` git submodule update --recursive --remote ```
 
-## Prerequisites
+## Getting Started
+
 
 ## Versions
 Json:
