@@ -12,7 +12,7 @@ This project has been developed in July 2020 during the AEC Tech Hackathon.You c
 *BIMSOCKet Main Goal*
 =====================================================
 
-BIMSOCKet main goal is not only to communicate programs but to enhance the way we work in our industry. Our ultimate goal is create processes and workflows between all the different programs and make them work as whole.
+[BIMSOCKet](https://bimsocket.rocks/) main goal is not only to communicate programs but to enhance the way we work in our industry. Our ultimate goal is create processes and workflows between all the different programs and make them work as whole.
 
 <img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/PartsRobot.jpg' width='250' alt='Conections logo' />
 
@@ -24,7 +24,7 @@ BIMSOCKet is a bidirectional cloud socket to connect any type of 3D software in 
 
 ## How does it work under the hood? ##
 
-BIMSOCKet allows you to create a [Firebase realtime database](https://firebase.google.com/) and then use addins on each software to connect to it in real time and save changes.
+[BIMSOCKet](https://bimsocket.rocks/) allows you to create a [Firebase realtime database](https://firebase.google.com/) and then use addins on each software to connect to it in real time and save changes.
 
 <img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/FirebaseConeection-01.png' width='250' alt='Conections logo' />
 
