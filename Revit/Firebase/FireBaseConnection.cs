@@ -191,7 +191,7 @@ namespace BIMSocket
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
                         RootObject = snapshot.ConvertTo<Rootobject>();
-                        RevitManagement.ProcessRemoteChanges(RootObject);
+                        RevitManagement.CompareAndUpdateCurrentModel(RootObject);
                         
                         //TODO check this to detect changes
                     }

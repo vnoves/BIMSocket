@@ -12,12 +12,15 @@ namespace BIMSocket
     {
         public void Execute(UIApplication app)
         {
-            MainCommand._doc = app.ActiveUIDocument.Document;
-
+            var _doc = app.ActiveUIDocument.Document;
+            RevitManagement.SetCurrentDocument(_doc);
+            RevitManagement.SetCurrentUIDocument(app.ActiveUIDocument);
             var changes = RevitManagement.ProcessLocalChanges();
-            RevitManagement.changedElements = new List<ElementId>();
 
+
+            RevitManagement.changedElements = new List<ElementId>();
             MainForm.ClearChangedItems();
+
             if (changes == null)
             {
                 return;
@@ -37,10 +40,21 @@ namespace BIMSocket
     {
         public void Execute(UIApplication app)
         {
-            MainCommand._doc = app.ActiveUIDocument.Document;
+            var _doc = app.ActiveUIDocument.Document;
+            RevitManagement.SetCurrentDocument(_doc);
+            RevitManagement.SetCurrentUIDocument(app.ActiveUIDocument);
 
-            var CurrentRootObject = RevitManagement.ProcessAllModel(app.ActiveUIDocument.Document);
-            FireBaseConnection.SendModelToDB(CurrentRootObject, "models", MainCommand._doc.Title);
+            if (_doc.ActiveView.ViewType != ViewType.ThreeD)
+            {
+                var td = new TaskDialog("Wrong view type");
+                td.MainInstruction = "Select a 3D View to start the app";
+                td.Show();
+                return;
+            }
+
+            RevitManagement.SetView3D(_doc.ActiveView as View3D);
+            var CurrentRootObject = RevitManagement.ProcessAllModel();
+            FireBaseConnection.SendModelToDB(CurrentRootObject, "models", _doc.Title);
         }
 
         public string GetName()
@@ -53,13 +67,12 @@ namespace BIMSocket
     {
         public void Execute(UIApplication app)
         {
-            MainCommand._doc = app.ActiveUIDocument.Document;
-            MainCommand._uidoc = app.ActiveUIDocument;
-            using (Transaction tx = new Transaction(MainCommand._doc,"Updating Model"))
+            var _doc = app.ActiveUIDocument.Document;
+
+            using (Transaction tx = new Transaction(_doc, "Updating Model"))
             {
                 tx.Start();
-                RevitManagement.ApplyGeometryChanges(MainCommand._doc);
-                RevitManagement.ApplyMaterialChanges(MainCommand._doc);
+                RevitManagement.ProcessReceivedChanges();
                 tx.Commit();
                 MainForm.ClearReceivedItems();
             }

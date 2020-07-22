@@ -13,9 +13,6 @@ namespace BIMSocket
     {
         static AddInId appId = new AddInId(new Guid("3256F49C-7F76-4734-8992-3F1CF468BE9B"));
 
-        internal static Document _doc;
-        internal static View3D view3DToExport;
-        internal static UIDocument _uidoc;
 
         public static MainForm mainForm { get; private set; }
 
@@ -25,42 +22,15 @@ namespace BIMSocket
             mainForm = new MainForm(commandData);
             Process process = Process.GetCurrentProcess();
 
-            _doc = commandData.Application.ActiveUIDocument.Document;
+            RevitManagement.SetCurrentDocument(commandData.Application.ActiveUIDocument.Document);
+            RevitManagement.SetCurrentUIDocument(commandData.Application.ActiveUIDocument);
 
-            if (_doc.ActiveView.ViewType != ViewType.ThreeD)
-            {
-                var td = new TaskDialog("Wrong view type");
-                td.MainInstruction =  "Select a 3D View to start the app";
-                td.Show();
-                return Result.Cancelled;
-
-            }
-            view3DToExport = (View3D) _doc.ActiveView;
             IntPtr h = process.MainWindowHandle;
             mainForm.Topmost = true;
             mainForm.Show(); //Changed to modeless
             return Result.Succeeded;
         }
 
-        internal static Document GetCurrentDocument()
-        {
-            return _doc;
-        }
-
-        internal static View3D GetExportView3D()
-        {
-            return view3DToExport;
-        }
-
-        internal static UIDocument GetCurrentUIDocument()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static UIApplication GetCurrentUIApplication()
-        {
-            throw new NotImplementedException();
-        }
     }
 
 
@@ -77,10 +47,9 @@ namespace BIMSocket
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
 
-            
-            Process process = Process.GetCurrentProcess();
-
             _doc = commandData.Application.ActiveUIDocument.Document;
+            RevitManagement.SetCurrentDocument(_doc);
+            RevitManagement.SetCurrentUIDocument(commandData.Application.ActiveUIDocument);
 
             if (_doc.ActiveView.ViewType != ViewType.ThreeD)
             {
@@ -89,34 +58,15 @@ namespace BIMSocket
                 td.Show();
                 return Result.Cancelled;
             }
-            view3DToExport = (View3D)_doc.ActiveView;
-            _doc = commandData.Application.ActiveUIDocument.Document;
-            ConnectToDB(_doc);
+
+            RevitManagement.SetView3D((View3D)_doc.ActiveView);
+            ConnectToDB();
             App.ExportModelExternalEvent.Raise();
             return Result.Succeeded;
         }
 
-        internal static Document GetCurrentDocument()
-        {
-            return _doc;
-        }
 
-        internal static View3D GetExportView3D()
-        {
-            return view3DToExport;
-        }
-
-        internal static UIDocument GetCurrentUIDocument()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static UIApplication GetCurrentUIApplication()
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool ConnectToDB(Document _doc)
+        private bool ConnectToDB()
         {
 
             return FireBaseConnection.Connect("models", _doc.Title);
