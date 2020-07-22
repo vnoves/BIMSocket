@@ -4,6 +4,9 @@
 [submodule "BIMSOCKetViewer"]
 	path = BIMSOCKetViewer
 	url = https://github.com/vnoves/BIMSOCKetViewer.git
+[submodule "RCvA3C"]
+	path = RCvA3C
+	url = https://github.com/pabloderen/RCvA3C.git
 [submodule "Rhino/BIMSocket/RCvA3C"]
 	path = Rhino/BIMSocket/RCvA3C
 	url = https://github.com/pabloderen/RCvA3C.git
