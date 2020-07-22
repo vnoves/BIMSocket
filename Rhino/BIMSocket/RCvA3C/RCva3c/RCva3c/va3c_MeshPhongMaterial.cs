@@ -17,7 +17,7 @@ namespace RCva3c
         /// <param name="inShininess">How shiny the specular highlight is; a higher value gives a sharper highlight. Default is 30</param>
         /// <param name="inOpacity">Number in the range of 0.0 - 1.0 indicating how transparent the material is. A value of 0.0 indicates fully transparent, 1.0 is fully opaque.</param>
         /// <returns></returns>
-        public Material GeneratePhongMaterial(Color inColor, Color inAmbient, Color inEmissive, Color inSpecular, double inShininess, double inOpacity)
+        public Material GeneratePhongMaterial(Guid uuid, Color inColor, Color inAmbient, Color inEmissive, Color inSpecular, double inShininess, double inOpacity)
         {
             if (inAmbient == null)
             {
@@ -39,18 +39,18 @@ namespace RCva3c
                 inOpacity = 1.0;
             }
 
-            outMaterial = ConstructPhongMaterial(inColor, inAmbient, inEmissive, inSpecular, inShininess, inOpacity);
+            outMaterial = ConstructPhongMaterial(uuid, inColor, inAmbient, inEmissive, inSpecular, inShininess, inOpacity);
             //call json conversion function
 
             Material material = new Material(outMaterial, va3cMaterialType.Mesh);
             return material;
         }
 
-        private string ConstructPhongMaterial(Color col, Color amb, Color em, Color spec, double shin, double opp)
+        private string ConstructPhongMaterial(Guid uuid, Color col, Color amb, Color em, Color spec, double shin, double opp)
         {
             dynamic jason = new ExpandoObject();
 
-            jason.uuid = Guid.NewGuid();
+            jason.uuid = uuid;
             jason.type = "MeshPhongMaterial";
             jason.color = _Utilities.hexColor(col);
             jason.ambient = _Utilities.hexColor(amb);

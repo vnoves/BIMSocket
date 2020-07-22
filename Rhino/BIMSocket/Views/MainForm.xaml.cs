@@ -1,4 +1,5 @@
-﻿using BIMSocket.Utils;
+﻿using BIMSocket.Models;
+using BIMSocket.Utils;
 using Rhino;
 using System;
 using System.CodeDom.Compiler;
@@ -22,6 +23,11 @@ namespace BIMSocket
     /// <summary>
     /// Interaction logic for MainForm.xaml
     /// </summary>
+    /// 
+
+
+
+
     public partial class MainForm : Window
     {
         private RhinoDoc doc;
@@ -31,18 +37,54 @@ namespace BIMSocket
         /// Check if the suffix is a number or not
         /// </summary>
 
+        private static object _changedElementsLock = new object();
+
+        internal static ObservableCollection<string> _changedElements;
+
+        private static object _receviedElementslock = new object();
+
+        internal static ObservableCollection<string> _receivedElements;
+
 
         public MainForm(RhinoDoc doc)
         {
-            this.doc = doc;
-            projectName = doc.Name.Replace(".3dm","");
-            var connected = ConnectToDB();
+
             InitializeComponent();
+
+            _changedElements = new ObservableCollection<string>();
+            BindingOperations.EnableCollectionSynchronization(_changedElements, _changedElementsLock);
+            _receivedElements = new ObservableCollection<string>();
+            BindingOperations.EnableCollectionSynchronization(_receivedElements, _receviedElementslock);
+
+            this.SendChangesList.ItemsSource = _changedElements;
+            this.ReceiveChangesList.ItemsSource = _receivedElements;
+
+            cleanVariables();
+            this.doc = doc;
+            projectName = doc.Name.Replace(".3dm", "");
+            var connected = ConnectToDB();
+            if (connected)
+            {
+                SetRealTimeConnection();
+            }
+
+
+        }
+
+        private void SetRealTimeConnection()
+        {
+            FireBaseConnection.ReceiveChangesFromDB();
         }
 
         private void cleanVariables()
         {
+            _changedElements.Clear();
 
+            RhinoManagement.changedElements = new List<string>();
+
+            _receivedElements.Clear();
+
+            RhinoManagement.geometryChanges = new Dictionary<string, Child>();
 
         }
 
@@ -52,12 +94,53 @@ namespace BIMSocket
         }
 
 
+        public static void AddChangedItem(string guid)
+        {
+            lock (_changedElementsLock)
+            {
+                if (!_changedElements.Contains(guid))
+                {
+                    _changedElements.Add(guid);
+                }
+            }
+
+        }
+
+        public static void ClearChangedItems()
+        {
+            lock (_changedElementsLock)
+            {
+                _changedElements.Clear();
+            }
+
+        }
+
+        public static void AddReceivedItem(string guid)
+        {
+            lock (_receviedElementslock)
+            {
+                if (!_receivedElements.Contains(guid))
+                {
+                    _receivedElements.Add(guid);
+                }
+                
+            }
+
+        }
+        public static void ClearReceivedItems()
+        {
+            lock (_receviedElementslock)
+            {
+                _receivedElements.Clear();
+            }
+
+        }
 
 
         private bool ConnectToDB()
         {
 
-           return FireBaseConnection.Connect("models", this.doc.Name);
+           return FireBaseConnection.Connect("models", projectName);
         }
 
     
@@ -91,13 +174,23 @@ namespace BIMSocket
 
         private void Receive_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            RhinoManagement.ApplyChanges();
+            MainForm.ClearReceivedItems();
         }
 
 
         private void Send_Button_Click(object sender, RoutedEventArgs e)
         {
 
+            string ro = RhinoManagement.ConvertChangesToString();
+            if (ro != null)
+            {
+
+                FireBaseConnection.SendChangesToDB(ro, null);
+            }
+
+            
+            MainForm.ClearChangedItems();
         }
     }
 }

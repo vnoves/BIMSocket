@@ -15,10 +15,9 @@ namespace RCva3c
         /// <param name="attributeValues">Attribute Values</param>
         /// <param name="layerName">Layer</param>
         /// <returns></returns>
-        public Element GenerateMeshElement( Mesh mesh, Material material, List<string> attributeNames, List<string> attributeValues, string layerName = "Default")
+        public Element GenerateMeshElement( Mesh mesh, Material material, Guid uuid, List<string> attributeNames, List<string> attributeValues, string layerName = "Default")
         {
-            attributeNames = new List<string>();
-            attributeValues = new List<string>();
+
             Dictionary<string, object> attributesDict = new Dictionary<string, object>();
 
             if (material.Type != va3cMaterialType.Mesh)
@@ -41,7 +40,7 @@ namespace RCva3c
             attributesDict.Add("layer", layerName);
 
             //create json from mesh
-            string outJSON = _Utilities.geoJSON(mesh, attributesDict);
+            string outJSON = _Utilities.geoJSON(mesh, uuid, attributesDict);
 
             Element e = new Element(outJSON, va3cElementType.Mesh, material, layer);
             return e;

@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using BIMSocket.Models;
+using Newtonsoft.Json;
 using RCva3c;
+using Rhino;
 using Rhino.Commands;
 using Rhino.DocObjects;
 using Rhino.Geometry;
 using Rhino.Input;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +18,10 @@ namespace BIMSocket.Utils
 {
     class RhinoManagement
     {
+        private static Rootobject _CurrentModel;
+        internal static List<string> changedElements;
+        internal static Dictionary<string, Child> geometryChanges;
+
         //internal static void ProcessRemoteChanges(Rootobject rootObject)
         //{
         //    throw new NotImplementedException();
@@ -41,7 +48,7 @@ namespace BIMSocket.Utils
 
         internal static string ConvertModelToString()
         {
-            ExportToJson();
+            ExportToJson(null);
             var jsonString = "";
             jsonString = FileManager.ReadJsonFile();
             return jsonString;
@@ -50,27 +57,33 @@ namespace BIMSocket.Utils
 
 
 
-        private static void ExportToJson()
+        private static void ExportToJson(List<string> guids)
         {
 
 
-            Rhino.DocObjects.ObjRef[] objrefs;
-            Result rc = RhinoGet.GetMultipleObjects("Select your scene objects",
-                                                                false, Rhino.DocObjects.ObjectType.AnyObject, out objrefs);
+            var doc = Rhino.RhinoDoc.ActiveDoc;
+           ObjectEnumeratorSettings settings = new ObjectEnumeratorSettings();
+            settings.ActiveObjects = true; 
+            List<Guid> ids = new List<Guid>();
+            var objrefs =  doc.Objects.GetObjectList(settings);
+
 
             List<Element> allElements = new List<Element>();
 
-            if (objrefs?.Length > 0)
-            {
-                foreach (var obj in objrefs)
+ 
+            foreach (var rhinoobj in objrefs)
                 {
-                    var material = obj.Object().GetMaterial(true);
+                    var obj = new ObjRef(rhinoobj.Id);
+                    var material = rhinoobj.GetMaterial(true);
                     var mesh = new va3c_Mesh();
                     Mesh finalMesh = new Mesh();
+                    var parameterNames = new List<string> { "objectId" };
+                    var parameterValues = new List<string> { obj.ObjectId.ToString() };
                     RCva3c.Material mat;
                     if (material != null)
                     {
-                        mat = new va3c_MeshPhongMaterial().GeneratePhongMaterial(material.DiffuseColor, material.AmbientColor, material.EmissionColor, material.SpecularColor, material.Shine, 1 - material.Transparency);
+                        mat = new va3c_MeshPhongMaterial().GeneratePhongMaterial(material.Id, material.DiffuseColor, material.AmbientColor, material.EmissionColor, material.SpecularColor, material.Shine, 1 - material.Transparency);
+
                     }
                     else
                     {
@@ -97,7 +110,7 @@ namespace BIMSocket.Utils
                                     finalMesh.Append(m);
                                 }
                             }
-                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, new List<string> { ObjectType.Brep.ToString() }, new List<string> { ObjectType.Brep.ToString() }));
+                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, obj.ObjectId, parameterNames, parameterValues));
                             break;
                         case ObjectType.Brep:
                             var brep = obj.Brep();
@@ -109,11 +122,11 @@ namespace BIMSocket.Utils
                                     finalMesh.Append(m);
                                 }
                             }
-                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, new List<string> { "objectId" }, new List<string> { obj.ObjectId.ToString() }));
+                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, obj.ObjectId, parameterNames, parameterValues));
                             break;
                         case ObjectType.Mesh:
                             var msh = obj.Mesh();
-                            allElements.Add(mesh.GenerateMeshElement(msh, mat, new List<string> { "objectId" }, new List<string> { obj.ObjectId.ToString() }));
+                            allElements.Add(mesh.GenerateMeshElement(msh, mat, obj.ObjectId, parameterNames, parameterValues));
                             break;
                         case ObjectType.Light:
                             break;
@@ -164,7 +177,7 @@ namespace BIMSocket.Utils
                                     finalMesh.Append(m);
                                 }
                             }
-                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, new List<string> { "objectId" }, new List<string> { obj.ObjectId.ToString() }));
+                            allElements.Add(mesh.GenerateMeshElement(finalMesh, mat, obj.ObjectId, parameterNames, parameterValues ));
                             break;
                         case ObjectType.AnyObject:
                             break;
@@ -172,7 +185,7 @@ namespace BIMSocket.Utils
                             break;
                     }
                 }
-            }
+   
 
             var scenecompiler = new va3c_SceneCompiler();
             string resultatas = scenecompiler.GenerateSceneJson(allElements);
@@ -180,7 +193,71 @@ namespace BIMSocket.Utils
             writer.SaveFileTo(new List<string> { resultatas });
         }
 
+        internal static string ConvertChangesToString()
+        {
+            ExportToJson(changedElements);
+            var jsonString = "";
+            jsonString = FileManager.ReadJsonFile();
 
+            changedElements.Clear();
+
+            return jsonString;
+        }
+
+        internal static void SaveCurrentModel(Rootobject obj)
+        {
+            _CurrentModel = obj;
+        }
+
+        internal static void ProcessRemoteChanges(Rootobject newModel)
+        {
+            var modifiedGeometry = GetModifiedGeometry(_CurrentModel, newModel);
+            foreach (var item in modifiedGeometry)
+            {
+
+                MainForm.AddReceivedItem(item.userData.objectId);
+
+                geometryChanges[item.userData.objectId] =  item;
+            }
+
+        }
+
+        public static void ApplyChanges()
+        {
+            var doc = Rhino.RhinoDoc.ActiveDoc;
+            foreach (var item in geometryChanges)
+            {
+                MoveObject(doc, item.Value);
+               
+            }
+            geometryChanges.Clear();
+
+        }
+
+        private static void MoveObject(RhinoDoc doc, Child item)
+        {
+            var guid = new Guid(item.userData.objectId);
+            var obj = new ObjRef(guid);
+            var matrix = item.matrix;
+            Vector3d vec = new Vector3d(-matrix[12], matrix[14], matrix[13]);
+            var xf = Rhino.Geometry.Transform.Translation(vec);
+
+            Guid id = doc.Objects.Transform(obj, xf, true);
+            if (id != Guid.Empty)
+            {
+                doc.Views.Redraw();
+            }
+        }
+
+        private static List<Child> GetModifiedGeometry(Rootobject currentRootObject, Rootobject newModel)
+        {
+            var identity = new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+
+            var objectsWithChanges = newModel._object.children.Where(x => !x.matrix.SequenceEqual(identity));
+
+            return objectsWithChanges.ToList();
+
+        }
 
     }
 }

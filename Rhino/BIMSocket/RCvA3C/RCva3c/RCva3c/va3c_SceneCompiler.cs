@@ -343,15 +343,15 @@ namespace RCva3c
             foreach (var g in MeshDict.Keys) //meshes
             {
                 jason.OOO.children[i] = new ExpandoObject();
-                jason.OOO.children[i].uuid = Guid.NewGuid();
-                jason.OOO.children[i].name = "mesh" + i.ToString();
+                jason.OOO.children[i].uuid = g + MeshDict[g];
+                jason.OOO.children[i].name = "mesh" + g;
                 jason.OOO.children[i].type = "Object3D";
                 jason.OOO.children[i].geometry = g;
                 jason.OOO.children[i].matrix = numbers;
                 jason.OOO.children[i].userData = attrDict[g].userData;
                 jason.OOO.children[i].children = new object[1];
                 jason.OOO.children[i].children[0] = new ExpandoObject();
-                jason.OOO.children[i].children[0].uuid = Guid.NewGuid();
+                jason.OOO.children[i].children[0].uuid = g + MeshDict[g];
                 jason.OOO.children[i].children[0].name = "mesh" + i.ToString();
                 jason.OOO.children[i].children[0].type = "Mesh";
                 jason.OOO.children[i].children[0].geometry = g;

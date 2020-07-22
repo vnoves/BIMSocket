@@ -33,13 +33,13 @@ namespace RCva3c
         /// <param name="mesh">The rhino mesh to serialize.  Can contain quads and tris.</param>
         /// <param name="attDict">The attribute dictionary to serialize.  Objects should all be reference types.</param>
         /// <returns>a JSON string representing a rhino mes</returns>
-        public static string geoJSON(Mesh mesh, Dictionary<string, object> attDict)
+        public static string geoJSON(Mesh mesh, Guid uuid, Dictionary<string, object> attDict)
         {
             //create a dynamic object to populate
             dynamic jason = new ExpandoObject();
 
 
-            jason.uuid = Guid.NewGuid();
+            jason.uuid = uuid;
             jason.type = "Geometry";
             jason.data = new ExpandoObject();
             jason.userData = new ExpandoObject();

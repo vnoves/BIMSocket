@@ -17,8 +17,19 @@ namespace BIMSocket
         {
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
+            RhinoDoc.BeforeTransformObjects += BeforeTransformObjects;
             Instance = this;
         }
+
+        private void BeforeTransformObjects(object sender, RhinoTransformObjectsEventArgs e)
+        {
+            foreach (var item in e.Objects)
+            {
+                MainForm.AddChangedItem(item.Id.ToString());
+            }
+        }
+
+
 
         ///<summary>The only instance of this command.</summary>
         public static RhinoToJsonCommand Instance
@@ -37,7 +48,7 @@ namespace BIMSocket
 
             MainForm mainForm = new MainForm(doc);
             mainForm.Show();
-    
+        
             return Result.Success;
         }
 
