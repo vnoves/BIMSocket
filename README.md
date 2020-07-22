@@ -59,6 +59,8 @@ Refresh submodules
 
 ``` git submodule update --recursive --remote ```
 
+For more details go to [Contribute](https://github.com/vnoves/BIMSocket/blob/master/CONTRIBUTING.md)
+
 ## Getting Started
 
 Visit the wiki [Getting started page](https://github.com/vnoves/BIMSocket/wiki/Getting-started)
