@@ -35,23 +35,23 @@
             <!--Main Form elements-->
             <Button Name="Send_Button" 
                     Style="{DynamicResource MainButtonStyle}"  
-                    Margin="8,400,0,6"
+                    Margin="8,377,0,43"
                     HorizontalAlignment="Left" Content="SEND"  Click="Send_Button_Click"/>
-            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,301,0,0" VerticalAlignment="Top" Width="182" x:Name="SendChangesList" ItemsSource="{Binding changedElements}" />
-            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,128,0,0" VerticalAlignment="Top" Width="183" x:Name="ReceiveChangesList" ItemsSource="{Binding receivedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,271,0,0" VerticalAlignment="Top" Width="182" x:Name="SendChangesList" ItemsSource="{Binding changedElements}" />
+            <ListBox HorizontalAlignment="Left" Height="91" Margin="8,98,0,0" VerticalAlignment="Top" Width="183" x:Name="ReceiveChangesList" ItemsSource="{Binding receivedElements}" />
             <Label Style="{DynamicResource VersionLabel}" 
-                Margin="44,281,0,141" 
+                Margin="44,258,0,178" 
                 HorizontalAlignment="Left" Content="OUTGOING" HorizontalContentAlignment="Left" Width="112"/>
             <Label Style="{DynamicResource VersionLabel}" 
-                Margin="44,107,0,315" 
+                Margin="44,84,0,352" 
                 HorizontalAlignment="Left" Content="INCOMING" HorizontalContentAlignment="Left" Width="112"/>
-            <Button x:Name="SendModel" 
+            <!--<Button x:Name="SendModel" 
                 Style="{DynamicResource MainButtonStyle}"  
                 Margin="8,54,0,352"
-                HorizontalAlignment="Left" Content="Send Model"  Click="SendModel_Click"/>
+                HorizontalAlignment="Left" Content="Send Model"  Click="SendModel_Click"/>-->
             <Button x:Name="Receive_Button" 
                 Style="{DynamicResource MainButtonStyle}"  
-                Margin="10,225,0,181"
+                Margin="10,202,0,218"
                 HorizontalAlignment="Left" Content="RECEIVE"  Click="Receive_Button_Click"/>
         </Grid>
     </Border>

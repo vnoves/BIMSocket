@@ -14,11 +14,13 @@ namespace BIMSocket
         internal static List<ElementId> deletedElements;
         internal static Dictionary<ElementId, Child> geometryChanges;
         private static Dictionary<ElementId, Material> materialChanges;
+        private static Document _doc { get; set; }
 
         public static Rootobject CurrentRootObject { get; internal set; }
 
-        internal static Rootobject ProcessAllModel()
+        internal static Rootobject ProcessAllModel(Document document)
         {
+            _doc = document;
             return ConvertModelToRootObject();
         }
 
@@ -126,7 +128,7 @@ namespace BIMSocket
         private static void ExportToJson()
         {
             RvtVa3c.Command command = new RvtVa3c.Command();
-            View3D view3D = MainCommand.GetExportView3D();
+            View3D view3D = _doc.ActiveView as View3D;
             var jsonPath = Utils.LocalFiles.getJson3DPath();
             command.ExportView3D(view3D, jsonPath);
         }

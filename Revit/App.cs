@@ -75,7 +75,7 @@ namespace BIMSocket
              "This addin helps you to ...";
 
             //Icon file location
-            string iconFlLctn = NameSpaceNm + ".Resources.Icon.png";
+            string iconFlLctn = NameSpaceNm + ".Resources.RevitLogo.png";
 
             // Set the large image shown on button.
             pushButton.LargeImage = PngImageSource(
@@ -96,6 +96,47 @@ namespace BIMSocket
             // Assign contextual help to pushbutton
             pushButton.SetContextualHelp(contextHelp);
 
+
+            //Execute File location
+            string fileLctnExport = NameSpaceNm + ".ExportCommand";
+
+            //Button Export Model
+            PushButton pushButtonExport = m_projectPanel.AddItem(new PushButtonData(
+                    "Export model", "Export model", ExecutingAssemblyPath,
+                    fileLctnExport)) as PushButton;
+
+            //Add Help ToolTip 
+            pushButtonExport.ToolTip = "Export model";
+
+            //Add long description 
+            pushButtonExport.LongDescription =
+             "This addin helps you to ...";
+
+            //Icon file location
+            string iconFlLctnExport = NameSpaceNm + ".Resources.ExportLogo.png";
+
+            // Set the large image shown on button.
+            pushButtonExport.LargeImage = PngImageSource(
+                iconFlLctnExport);
+
+            // Get the location of the solution DLL
+            string pathExport = System.IO.Path.GetDirectoryName(
+               System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            // Combine path with \
+            string newpathExport = Path.GetFullPath(Path.Combine(path, @"..\"));
+
+
+            ContextualHelp contextHelpExport = new ContextualHelp(
+                ContextualHelpType.Url,
+                "https://google.com");
+
+            // Assign contextual help to pushbutton
+            pushButtonExport.SetContextualHelp(contextHelp);
+
+
+
+
             // A new handler to handle request posting by the dialog
             ExportEvent handler = new ExportEvent();
 
@@ -107,7 +148,6 @@ namespace BIMSocket
 
             // External Event for the dialog to use (to post requests)
             ExportModelExternalEvent = ExternalEvent.Create(handlerB);
-
 
             // A new handler to handle request posting by the dialog
             ReceiveChangesEvent handlerC = new ReceiveChangesEvent();

@@ -144,10 +144,10 @@ namespace BIMSocket
 
 
 
-        private void SendModel_Click(object sender, RoutedEventArgs e)
-        {
-            App.ExportModelExternalEvent.Raise();
-        }
+        //private void SendModel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    App.ExportModelExternalEvent.Raise();
+        //}
 
 
 

@@ -39,7 +39,7 @@ namespace BIMSocket
         {
             MainCommand._doc = app.ActiveUIDocument.Document;
 
-            var CurrentRootObject = RevitManagement.ProcessAllModel();
+            var CurrentRootObject = RevitManagement.ProcessAllModel(app.ActiveUIDocument.Document);
             FireBaseConnection.SendModelToDB(CurrentRootObject, "models", MainCommand._doc.Title);
         }
 
