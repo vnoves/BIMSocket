@@ -1,5 +1,22 @@
 # Contributing
 
+Contribute
+BIMSocket is an open-source project. You can make suggestions or track and submit bugs via Github issues. You can submit your own code to the BIMSocket project via a Github pull request.
+
+Clone this repo
+
+git clone https://github.com/vnoves/BIMSocket.git
+
+Load submodules
+
+git pull --recurse-submodules
+
+Refresh submodules git submodule update --init --recursive
+
+git submodule update --recursive --remote
+
+## The Process
+
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
 
