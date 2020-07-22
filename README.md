@@ -65,7 +65,7 @@ Visit the wiki [Getting started page](https://github.com/vnoves/BIMSocket/wiki/G
 
 ## Authors
 * [ **Valentin Noves** - *ENGworks*](https://www.linkedin.com/in/novesvalentin/)<br/>
-* [**Pablo Derendinger** - *Engowrks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
+* [**Pablo Derendinger** - *Engworks*](https://www.linkedin.com/in/pablo-derendinger/)<br/>
 * [**Alexander Corral** - *ENGworks*](https://www.linkedin.com/in/ivan-alexander-corral-aab16412b/)<br/>
 * [**Jason Ekensten** - *Resorts World Las Vegas*](https://www.linkedin.com/in/jason-ekensten-787b1933/)<br/>
 
