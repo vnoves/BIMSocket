@@ -118,6 +118,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -135,6 +136,7 @@
       <HintPath>References\Vim.DataFormat.dll</HintPath>
     </Reference>
     <Reference Include="Vim.DotNetUtilities">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Vim.DotNetUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Vim.DotNetUtilities.JsonSerializer">
@@ -161,6 +163,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Firebase\FileManager.cs" />
     <Compile Include="Firebase\FireBaseConnection.cs" />
     <Compile Include="Firebase\VIMManagement.cs" />
     <Compile Include="LocalFiles.cs" />

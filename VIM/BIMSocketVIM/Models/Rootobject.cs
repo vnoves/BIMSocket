@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Documents;
 
 
-namespace BIMSocket
+namespace BIMSocket_VIM
 {
 
     [FirestoreData]

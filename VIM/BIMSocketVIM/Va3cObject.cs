@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace BIMSocket_VIM
+namespace BIMSocket_VIM.Model
 {
     /// <summary>
     /// Based on MeshPhongMaterial obtained by 

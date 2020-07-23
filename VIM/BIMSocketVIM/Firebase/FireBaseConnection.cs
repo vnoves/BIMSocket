@@ -17,7 +17,7 @@ using DocumentReference = Google.Cloud.Firestore.DocumentReference;
 using Google.Apis.Util;
 
 
-namespace BIMSocket
+namespace BIMSocket_VIM
 {
     internal class FireBaseConnection
     {
@@ -33,7 +33,7 @@ namespace BIMSocket
             DocumentName = Document;
             try
             {
-                string path = Utils.LocalFiles.getCredentialsPath();
+                string path = FileManager.getCredentialsPath();
                 FirestoreClientBuilder builder = new FirestoreClientBuilder();
                 builder.CredentialsPath = path;
                 var client = builder.Build();
@@ -191,7 +191,7 @@ namespace BIMSocket
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
                         RootObject = snapshot.ConvertTo<Rootobject>();
-                        VIMManagement.CompareAndUpdateCurrentModel(RootObject);
+                        VIMManagement.ConvertJsonToVim(RootObject);
                         
                         //TODO check this to detect changes
                     }
