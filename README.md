@@ -1,4 +1,4 @@
-<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/LogoGithub.png' width='400' alt='BIMSocket logo' />
+[<img src='https://github.com/vnoves/BIMSocket/blob/master/Socket/Resources/LogoGithub.png' width='400' alt='BIMSocket logo' />](https://bimsocket.rocks/)
 
 
 *Keeping you conected*
