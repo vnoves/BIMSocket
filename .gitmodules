@@ -10,3 +10,6 @@
 [submodule "Rhino/BIMSocket/RCvA3C"]
 	path = Rhino/BIMSocket/RCvA3C
 	url = https://github.com/pabloderen/RCvA3C.git
+[submodule "VIM/vim-desktop-sdk"]
+	path = VIM/vim-desktop-sdk
+	url = https://github.com/pabloderen/vim-desktop-sdk.git
