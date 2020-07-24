@@ -228,7 +228,15 @@ namespace BIMSocket.Utils
             foreach (var item in geometryChanges)
             {
                 MoveObject(doc, item.Value);
-               
+                changedElements.Add(item.Key);
+
+
+            }
+            string ro = RhinoManagement.ConvertChangesToString();
+            if (ro != null)
+            {
+
+                FireBaseConnection.SendChangesToDB(ro, null);
             }
             geometryChanges.Clear();
 
@@ -251,7 +259,7 @@ namespace BIMSocket.Utils
 
         private static List<Child> GetModifiedGeometry(Rootobject currentRootObject, Rootobject newModel)
         {
-            var identity = new int[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+            var identity = new float[] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
 
             var objectsWithChanges = newModel._object.children.Where(x => !x.matrix.SequenceEqual(identity));
 

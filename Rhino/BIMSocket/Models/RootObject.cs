@@ -87,7 +87,7 @@ namespace BIMSocket.Models
         [FirestoreProperty]
         public string geometry { get; set; }
         [FirestoreProperty]
-        public int[] matrix { get; set; }
+        public float[] matrix { get; set; }
         [FirestoreProperty]
         public Userdata userData { get; set; }
         [FirestoreProperty]
