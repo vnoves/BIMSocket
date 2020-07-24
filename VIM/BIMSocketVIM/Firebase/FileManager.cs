@@ -19,6 +19,12 @@ namespace BIMSocket_VIM
             return path;
         }
 
+        public static string getVIMPath()
+        {
+            var s = Assembly.GetExecutingAssembly().Location;
+            string path = Directory.GetParent(s) + "\\BIMSocket.vim";
+            return path;
+        }
 
         public static string getCredentialsPath()
         {

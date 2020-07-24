@@ -70,10 +70,12 @@ namespace BIMSocket_VIM
         [FirestoreProperty]
         public float[] matrix { get; set; }
         [FirestoreProperty]
-        public Children[] children { get; set; }
+        public Child[] children { get; set; }
         [FirestoreProperty]
         public Userdata userData { get; set; }
-        
+        [FirestoreProperty]
+        public string geometry { get; set; }
+
     }
     [FirestoreData]
     public class Userdata

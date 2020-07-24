@@ -99,7 +99,7 @@ namespace BIMSocket_VIM
             {
                 if (item.children == null)
                 {
-                    item.children = new Children[] { };
+                    item.children = new Child[] { };
                 }
             }
 
@@ -191,6 +191,7 @@ namespace BIMSocket_VIM
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
                         RootObject = snapshot.ConvertTo<Rootobject>();
+                       
                         VIMManagement.ConvertJsonToVim(RootObject);
                         
                         //TODO check this to detect changes

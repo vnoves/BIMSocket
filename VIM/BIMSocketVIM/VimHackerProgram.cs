@@ -21,16 +21,17 @@ namespace BIMSocket_VIM
 
         public static void Main(string[] args)
         {
-            System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
+            VIMManagement.TestJsonToVim(@"C:\Users\pderendinger\Desktop\BIMSocket.json", false);
+            //System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
 
-            currentDomain.AssemblyResolve += new ResolveEventHandler(currentDomain_AssemblyResolve);
+            //currentDomain.AssemblyResolve += new ResolveEventHandler(currentDomain_AssemblyResolve);
 
-            if (FireBaseConnection.Connect("models", "test1"))
-            {
-                FireBaseConnection.ReceiveChangesFromDB();
-            }
+            //if (FireBaseConnection.Connect("models", "FBK_01"))
+            //{
+            //    FireBaseConnection.ReceiveChangesFromDB();
+            //}
 
-            System.Windows.Forms.Application.Run();
+            //System.Windows.Forms.Application.Run();
 
         }
 

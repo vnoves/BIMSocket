@@ -188,7 +188,7 @@ namespace BIMSocket.Utils
    
 
             var scenecompiler = new va3c_SceneCompiler();
-            string resultatas = scenecompiler.GenerateSceneJson(allElements);
+            string resultatas = scenecompiler.GenerateSceneJson(doc.Name.Replace(".3dm",""),allElements);
             FileManager writer = new FileManager();
             writer.SaveFileTo(new List<string> { resultatas });
         }

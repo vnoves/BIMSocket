@@ -136,10 +136,10 @@ namespace BIMSocket.Models
     {
         [FirestoreProperty] public string uuid { get; set; }
         [FirestoreProperty] public string type { get; set; }
-        [FirestoreProperty] public string color { get; set; }
-        [FirestoreProperty] public string ambient { get; set; }
-        [FirestoreProperty] public string emissive { get; set; }
-        [FirestoreProperty] public string specular { get; set; }
+        [FirestoreProperty] public int color { get; set; }
+        [FirestoreProperty] public int ambient { get; set; }
+        [FirestoreProperty] public int emissive { get; set; }
+        [FirestoreProperty] public int specular { get; set; }
         [FirestoreProperty] public float shininess { get; set; }
         [FirestoreProperty] public float opacity { get; set; }
         [FirestoreProperty] public bool transparent { get; set; }

@@ -155,8 +155,8 @@ namespace BIMSocket
                         Console.WriteLine("Document data for {0} document:", snapshot.Id);
 
                         var st = Newtonsoft.Json.JsonConvert.SerializeObject(snapshot.ToDictionary());
-                        RootObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Rootobject>(st);
-                        RhinoManagement.ProcessRemoteChanges(RootObject);
+                        var _RootObject = Newtonsoft.Json.JsonConvert.DeserializeObject<Rootobject>(st);
+                        RhinoManagement.ProcessRemoteChanges(_RootObject);
 
                         //TODO check this to detect changes
                     }

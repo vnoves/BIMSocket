@@ -20,13 +20,11 @@ namespace BIMSocket_VIM
     {
         internal static void ConvertJsonToVim(Rootobject rootObject)
         {
-
             using (var file = File.CreateText(FileManager.getJson3DPath()))
-            {
                 new JsonSerializer().Serialize(file, rootObject);
-            }
 
-            string resultPath = TestJsonToVim(FileManager.getJson3DPath());
+            var result = TestJsonToVim(FileManager.getJson3DPath(), false);
+
         }
 
         public static string TestDataFolder => Path.Combine(Assembly.GetExecutingAssembly().Location, "..", "..", "..", "..", "test-data");
@@ -91,9 +89,9 @@ namespace BIMSocket_VIM
         public const float Mult = (float)Constants.MmToFeet;
 
         public static Vector3 ToVertex(double x, double y, double z)
-            => new Vector3((float)x * Mult, (float)y * Mult, (float)z * Mult);
+            => new Vector3((float)x * Mult, (float)y * -Mult, (float)z * Mult);
 
-        public static GeometryBuilder ToGeometryBuilder(Va3cGeometry g)
+        public static GeometryBuilder ToGeometryBuilder(this Va3cGeometry g)
         {
             var gb = new GeometryBuilder();
             var vertices = g.data.vertices.ToIArray()
@@ -163,14 +161,16 @@ namespace BIMSocket_VIM
         public static void SaveAsVa3c(this VimScene vim, string filePath)
             => vim.ToVa3c().Write(filePath);
 
-        public static string TestJsonToVim(string filePath)
+        public static string TestJsonToVim(string filePath, bool roundTrip)
         {
             // Try loading the JSON and saving as VIM
             var va3c = LoadVa3c(filePath);
-            var outputVim = Util.ChangeDirectoryAndExt(filePath, TestOutputFolder, ".vim");
+            var outputVim = FileManager.getVIMPath();
             va3c.SaveAsVim(outputVim);
 
-
+            // TODO: currently fails
+            if (roundTrip)
+                return TestVimToJsonToVim(outputVim);
 
             return outputVim;
         }
