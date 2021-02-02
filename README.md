@@ -7,7 +7,7 @@
 💬 [Join the BIMSocket community](https://aec-hackathon.slack.com/archives/C016TLPNEJH)
 
 This project has been developed in July 2020 during the AEC Tech Hackathon.You can find the presentation of the idea
-[Here](https://docs.google.com/presentation/d/1e8JpqT0Mbv7d2FD3T50pKj_9IKl_7vQu7V7U3cBJq-k/edit?usp=sharing)
+[Here](https://youtu.be/A82ZdDpaIRQ)
 
 *BIMSOCKet Main Goal*
 =====================================================
